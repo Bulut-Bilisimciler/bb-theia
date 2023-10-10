@@ -4,15 +4,25 @@ This is the project of custom package.json implementation of main Theia Template
 
 ### Build and Tagging
 Build:  
-- `docker buildx build --platform linux/amd64 --memory 6 -t alperreha/bb-theia:ubuntu-node-1-0-0-rev1 .`  
-
-Example Builds:  
-- [ ] Debian Nodejs: `docker buildx build -f Dockerfile.debian-node --platform linux/amd64 --memory 6 -t alperreha/bb-theia:debian-node-1-0-0-rev1 .`
-- [ ] Ubuntu Nodejs Python: `docker buildx build -f Dockerfile.ubuntu-node-python --platform linux/amd64 --memory 6 -t alperreha/bb-theia:ubuntu-node-python-1-0-0-rev1 .`
+- `docker buildx build --platform linux/amd64 --memory 6 -t alperreha/bb-theia:ubuntu-rev1 .`  
 
 Run:  
-- `docker run --rm -p 3030:3030 alperreha/bb-theia:debian-node-1-0-0-rev1 `  
+- `docker run --rm -it --runtime=sysbox-runc -p 3030:3030 alperreha/bb-theia:ubuntu-rev1`  
 
 ### Available Images
 
-- [x] Debian Nodejs-18 Theia
+- [ ] [Ubuntu Node](https://hub.docker.com/r/alperreha/bb-theia/tags)
+- [ ] [Ubuntu Theia](https://hub.docker.com/r/alperreha/bb-theia/tags)
+- [ ] [Ubuntu Docker](https://hub.docker.com/r/alperreha/bb-theia/tags)
+- [ ] [Ubuntu Theia Docker](https://hub.docker.com/r/alperreha/bb-theia/tags)
+- [ ] [Ubuntu Theia Postgres](https://hub.docker.com/r/alperreha/bb-theia/tags)
+- [ ] [Ubuntu Theia Mongo](https://hub.docker.com/r/alperreha/bb-theia/tags)
+- [ ] [Ubuntu Theia Mysql](https://hub.docker.com/r/alperreha/bb-theia/tags)
+- [ ] [Ubuntu Theia JDK11](https://hub.docker.com/r/alperreha/bb-theia/tags)
+- [ ] [Ubuntu Theia Kind](https://hub.docker.com/r/alperreha/bb-theia/tags)
+- [ ] [Ubuntu Theia Minikube](https://hub.docker.com/r/alperreha/bb-theia/tags)
+- [ ] [Pardus Theia](https://hub.docker.com/r/alperreha/bb-theia/tags)
+- [ ] [Alpine Theia](https://hub.docker.com/r/alperreha/bb-theia/tags)
+- [ ] [Centos Theia](https://hub.docker.com/r/alperreha/bb-theia/tags)
+- [ ] [Rocky Linux 8 Theia](https://hub.docker.com/r/alperreha/bb-theia/tags)
+
