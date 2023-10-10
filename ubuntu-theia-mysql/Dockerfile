@@ -78,16 +78,11 @@ RUN mkdir -p /root/workspace && \
 COPY --from=0 /home/ide /root/ide
 
 # ! ADD CUSTOM IMPLEMENTATION  
-#Install MongoDB
-RUN apt update -y 
-RUN curl -fsSL https://www.mongodb.org/static/pgp/server-4.4.asc | sudo apt-key add - 
-RUN echo "deb [ arch=amd64,arm64 ] https://repo.mongodb.org/apt/ubuntu focal/mongodb-org/4.4 multiverse" | sudo tee /etc/apt/sources.list.d/mongodb-org-4.4.list
-RUN  wget http://archive.ubuntu.com/ubuntu/pool/main/o/openssl/libssl1.1_1.1.1f-1ubuntu2.19_amd64.deb
-RUN  dpkg -i ./libssl1.1_1.1.1f-1ubuntu2.19_amd64.deb
+# MySQL installation
 RUN export DEBIAN_FRONTEND=noninteractive \
-    && echo "Europe/Istanbul" > /etc/timezone 
-RUN apt-get update -y \
-    && apt-get install -y mongodb-org 
+    && echo "Europe/Istanbul" > /etc/timezone \
+    && apt-get update \
+    && apt-get install -y mysql-server
 
 # Prepare environment
 ADD motd /root/workspace/motd
