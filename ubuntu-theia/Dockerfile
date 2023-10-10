@@ -64,8 +64,10 @@ RUN mkdir -p /root/workspace && \
     # echo "export PS1='\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\$ '" >> /etc/bash.bashrc && \
     # format-1 is: root ~/workspace $ 
     echo "export PS1='\[\033[01;32m\]\u \[\033[01;34m\]\w\[\033[00m\] \$ '" >> /etc/bash.bashrc && \
+    echo "export PS1='\[\033[01;32m\]\u \[\033[01;34m\]\w\[\033[00m\] \$ '" >> /root/.bashrc && \
     # Fake poweroff (stops the container from the inside by sending SIGHUP to PID 1)
     echo "alias poweroff='kill -1 1'" >> /etc/bash.bashrc && \
+    echo "alias poweroff='kill -1 1'" >> /root/.bashrc && \
     # Setup an initial workspace
     echo '{"recentRoots":["file:///root/workspace"]}' > /root/.theia/recentworkspace.json && \
     # Setup settings (file icons theme)
