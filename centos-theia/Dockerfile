@@ -1,20 +1,16 @@
 # STAGE 1 - Build Theia
-FROM nestybox/ubuntu-jammy-systemd:latest
+FROM quay.io/centos/centos:stream8
 
 # Update and install
-RUN apt-get update && \
-    apt-get install -y make pkg-config gcc g++ python3 libx11-dev libxkbfile-dev libsecret-1-dev curl gnupg && \
-    apt-get update
+RUN dnf update && \
+    dnf install -y make pkg-config gcc g++ python3 libx11-dev libxkbfile-dev libsecret-1-dev curl gnupg && \
+    dnf update
 
 # Install Node.js, Yarn and required dependencies
 RUN curl -sL https://deb.nodesource.com/setup_18.x  | bash -
-RUN apt-get -y install nodejs \
+RUN dnf -y install nodejs \
     # remove useless files from the current layer
-    && rm -rf /var/lib/apt/lists/* \
-    && rm -rf /var/lib/apt/lists.d/* \
-    && apt-get autoremove \
-    && apt-get clean \
-    && apt-get autoclean
+    && dnf clean all 
 
 # Build Theia
 WORKDIR /home/ide
@@ -34,7 +30,7 @@ RUN yarn --production && \
 
 
 # STAGE 2 - Setup the final image
-FROM nestybox/ubuntu-jammy-systemd:latest
+FROM quay.io/centos/centos:stream8
 
 # Env variables
 ENV HOME=/root \
@@ -43,17 +39,13 @@ ENV HOME=/root \
     USE_LOCAL_GIT=true
 
 # Install Node.js, Yarn and required dependencies
-RUN apt-get update -y && apt-get -y install curl gnupg software-properties-common gcc \
+RUN dnf update -y && dnf -y install curl gnupg software-properties-common gcc \
     git openssh-client bash libsecret-1-0 jq curl socat && \
     add-apt-repository -y ppa:deadsnakes/ppa
 RUN curl -sL https://deb.nodesource.com/setup_18.x  | bash -
-RUN apt-get -y install nodejs \
+RUN dnf -y install nodejs \
     # remove useless files from the current layer
-    && rm -rf /var/lib/apt/lists/* \
-    && rm -rf /var/lib/apt/lists.d/* \
-    && apt-get autoremove \
-    && apt-get clean \
-    && apt-get autoclean
+    && dnf clean all 
 
 
 RUN mkdir -p /root/workspace && \
@@ -78,14 +70,41 @@ RUN mkdir -p /root/workspace && \
 COPY --from=0 /home/ide /root/ide
 
 # ! ADD CUSTOM IMPLEMENTATION  
-#Install MongoDB
-RUN apt update -y 
-RUN curl -fsSL https://www.mongodb.org/static/pgp/server-4.4.asc | sudo apt-key add - 
-RUN echo "deb [ arch=amd64,arm64 ] https://repo.mongodb.org/apt/ubuntu focal/mongodb-org/4.4 multiverse" | sudo tee /etc/apt/sources.list.d/mongodb-org-4.4.list
-RUN export DEBIAN_FRONTEND=noninteractive \
-    && echo "Europe/Istanbul" > /etc/timezone 
-RUN apt-get update -y \
-    && apt-get install -y mongodb-org 
+# Systemd installation
+#
+RUN dnf install -y \
+        iptables   \
+        iproute    \
+        kmod       \
+        procps-ng  \
+        sudo       \
+        udev &&    \
+    # Unmask services
+    systemctl unmask                                                  \
+        systemd-remount-fs.service                                    \
+        dev-hugepages.mount                                           \
+        sys-fs-fuse-connections.mount                                 \
+        systemd-logind.service                                        \
+        getty.target                                                  \
+        console-getty.service &&                                      \
+    # Prevents journald from reading kernel messages from /dev/kmsg
+    echo "ReadKMsg=no" >> /etc/systemd/journald.conf &&               \
+\
+    # Housekeeping
+    dnf clean all &&                                                  \
+    rm -rf                                                            \
+    /var/cache/dnf/*                                               \
+    /var/log/*                                                     \
+    /tmp/*                                                         \
+    /var/tmp/*                                                     \
+    /usr/share/doc/*                                               \
+    /usr/share/man/* &&                                            \
+\
+    # Create default 'admin/admin' user
+    useradd --create-home --shell /bin/bash admin -G wheel && echo "admin:admin" | chpasswd
+
+# Make use of stopsignal (instead of sigterm) to stop systemd containers.
+STOPSIGNAL SIGRTMIN+3
 
 # Prepare environment
 ADD motd /root/workspace/motd
