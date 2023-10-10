@@ -1,5 +1,5 @@
 # STAGE 1 - Build Theia
-FROM nestybox/ubuntu-jammy-systemd-docker:latest
+FROM nestybox/ubuntu-bionic-systemd-docker:latest
 
 # Update and install
 RUN apt-get update && \
@@ -34,7 +34,7 @@ RUN yarn --production && \
 
 
 # STAGE 2 - Setup the final image
-FROM nestybox/ubuntu-jammy-systemd-docker:latest
+FROM nestybox/ubuntu-bionic-systemd-docker:latest
 
 # Env variables
 ENV HOME=/root \
@@ -78,6 +78,28 @@ RUN mkdir -p /root/workspace && \
 COPY --from=0 /home/ide /root/ide
 
 # ! ADD CUSTOM IMPLEMENTATION 
+RUN apt-get update && apt-get install -y \
+    git \
+    make 
+# kubectl (with bash completion)
+ARG k8s_version=v1.20.2
+RUN curl -s https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo apt-key add -  \
+    && echo "deb https://apt.kubernetes.io/ kubernetes-xenial main" | sudo tee -a /etc/apt/sources.list.d/kubernetes.list \
+    && apt-get update \
+    && apt-get install kubectl="${k8s_version#v}"-00 \
+    && apt-get install bash-completion \
+    && kubectl completion bash >/etc/bash_completion.d/kubectl \
+    && apt-get clean -y \
+    && rm -rf /var/lib/apt/lists/*
+
+# K8s.io KinD
+RUN curl -Lo ./kind https://kind.sigs.k8s.io/dl/v0.10.0/kind-linux-amd64 \
+    && chmod +x ./kind \
+    && mv ./kind /usr/bin/kind
+
+# Pre-fetch kindnestnode image to be utilized by KinD tool
+COPY download-node-img.sh /usr/bin
+RUN chmod +x /usr/bin/download-node-img.sh && download-node-img.sh && rm /usr/bin/download-node-img.sh
 
 # Prepare environment
 ADD motd /root/workspace/motd
