@@ -79,7 +79,9 @@ COPY --from=0 /home/ide /root/ide
 
 # ! ADD CUSTOM IMPLEMENTATION  
 # PostgreSQL installation and configuration
-RUN apt-get update \
+RUN export DEBIAN_FRONTEND=noninteractive \
+    && echo "Europe/Istanbul" > /etc/timezone \
+    && apt-get update \
     && apt-get install -y postgresql postgresql-contrib \
     && echo "host all  all    0.0.0.0/0  md5" >> /etc/postgresql/$(ls /etc/postgresql)/main/pg_hba.conf \
     && echo "listen_addresses='*'" >> /etc/postgresql/$(ls /etc/postgresql)/main/postgresql.conf
