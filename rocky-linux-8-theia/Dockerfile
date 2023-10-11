@@ -10,7 +10,7 @@ RUN dnf -y update && \
 RUN curl -sL https://deb.nodesource.com/setup_18.x  | bash -
 RUN dnf -y install nodejs && \
     # remove useless files from the current layer
-    && dnf clean all 
+    dnf clean all 
 
 # Build Theia
 WORKDIR /home/ide
@@ -45,7 +45,7 @@ RUN dnf -y update && \
     curl -sL https://deb.nodesource.com/setup_18.x  | bash - && \
     dnf -y install nodejs && \
     # remove useless files from the current layer
-    && dnf clean all 
+    dnf clean all 
 
 
 RUN mkdir -p /root/workspace && \

@@ -79,9 +79,37 @@ COPY --from=0 /home/ide /root/ide
 
 # ! ADD CUSTOM IMPLEMENTATION  
 # Java installation
-RUN apt-get update \
-    && apt install openjdk-11-jre -y \
-    && apt install openjdk-11-jdk -y
+ARG OPENJDK_VERSION=11.0.2
+
+ENV TERM=xterm \
+    JAVA_HOME=/ortakatman/java11 \
+    PATH="${PATH}:/ortakatman/java11/bin" \
+    TZ="Europe/Istanbul" \
+    ADRES=/ortakatman
+    ADD ./motd /etc/motd
+
+RUN apt -y update \
+    && apt -y upgrade
+
+RUN set -eux \
+    && PAKETLER="bash \
+        tzdata \
+        wget" \
+     && apt -y install ${PAKETLER}
+
+RUN mkdir /ortakatman \
+    && wget https://download.java.net/java/GA/jdk11/9/GPL/openjdk-${OPENJDK_VERSION}_linux-x64_bin.tar.gz \
+    && tar -xzvf openjdk-${OPENJDK_VERSION}_linux-x64_bin.tar.gz \
+    && mv jdk-${OPENJDK_VERSION} /ortakatman/java11 \
+    && rm -f openjdk-${OPENJDK_VERSION}_linux-x64_bin.tar.gz \
+    && update-alternatives --install "/usr/bin/java" "java" "/ortakatman/java11/bin/java" 0 \
+    && apt clean
+
+WORKDIR /ortakatman
+
+ENV SHELL=/bin/bash
+
+#
 
 # Prepare environment
 ADD motd /root/workspace/motd
