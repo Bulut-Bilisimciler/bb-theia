@@ -80,8 +80,8 @@ COPY --from=0 /home/ide /root/ide
 # ! ADD CUSTOM IMPLEMENTATION  
 # Java installation
 RUN apt-get update \
-    && apt install default-jre \
-    && apt install default-jdk
+    && apt install openjdk-11-jre -y \
+    && apt install openjdk-11-jdk -y
 
 # Prepare environment
 ADD motd /root/workspace/motd

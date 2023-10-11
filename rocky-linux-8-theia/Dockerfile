@@ -42,7 +42,7 @@ ENV HOME=/root \
 RUN dnf -y update && \
     dnf -y install curl gnupg software-properties-common gcc \
     git openssh-client bash libsecret-1-0 jq curl socat && \
-RUN curl -sL https://deb.nodesource.com/setup_18.x  | bash - && \
+    curl -sL https://deb.nodesource.com/setup_18.x  | bash - && \
     dnf -y install nodejs && \
     # remove useless files from the current layer
     && dnf clean all 
