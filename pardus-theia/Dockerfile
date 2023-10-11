@@ -92,6 +92,6 @@ USER root
 EXPOSE 3030
 COPY script.sh /usr/bin/
 COPY bb.service /lib/systemd/system/
-# RUN chmod +x /usr/bin/script.sh && \
-#     ln -sf /lib/systemd/system/bb.service \
-#     /etc/systemd/system/multi-user.target.wants/bb.service
+RUN chmod +x /usr/bin/script.sh && \
+    ln -sf /lib/systemd/system/bb.service \
+    /etc/systemd/system/default.target.wants/bb.service
