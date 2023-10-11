@@ -88,8 +88,8 @@ RUN dnf install -y \
         console-getty.service &&                                      \
     # Prevents journald from reading kernel messages from /dev/kmsg
     echo "ReadKMsg=no" >> /etc/systemd/journald.conf &&               \
-\
-    # Housekeeping
+    # Enable autologin for console
+    # 
     dnf clean all &&                                                  \
     rm -rf                                                            \
     /var/cache/dnf/*                                               \
@@ -98,7 +98,7 @@ RUN dnf install -y \
     /var/tmp/*                                                     \
     /usr/share/doc/*                                               \
     /usr/share/man/* &&                                            \
-\
+    #
     # Create default 'admin/admin' user
     useradd --create-home --shell /bin/bash admin -G wheel && echo "admin:admin" | chpasswd
 

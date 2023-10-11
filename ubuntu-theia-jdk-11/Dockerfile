@@ -78,38 +78,26 @@ RUN mkdir -p /root/workspace && \
 COPY --from=0 /home/ide /root/ide
 
 # ! ADD CUSTOM IMPLEMENTATION  
-# Java installation
+# OpenJDK installation
+
+#Set env variables
+ENV JAVA_HOME=/opt/java \
+    PATH="${PATH}:/opt/java/bin" \
+    TZ="Europe/Istanbul"
+
+# Install required packages
+RUN apt-get update && apt-get install -y \
+    wget tzdata \
+    && apt-get clean
+
 ARG OPENJDK_VERSION=11.0.2
 
-ENV TERM=xterm \
-    JAVA_HOME=/ortakatman/java11 \
-    PATH="${PATH}:/ortakatman/java11/bin" \
-    TZ="Europe/Istanbul" \
-    ADRES=/ortakatman
-    ADD ./motd /etc/motd
+RUN mkdir -p /opt/java \
+    && wget -O openjdk.tar.gz https://download.java.net/java/GA/jdk11/9/GPL/openjdk-${OPENJDK_VERSION}_linux-x64_bin.tar.gz \
+    && tar -xzvf openjdk.tar.gz -C /opt/java --strip-components=1 \
+    && rm openjdk.tar.gz
 
-RUN apt -y update \
-    && apt -y upgrade
-
-RUN set -eux \
-    && PAKETLER="bash \
-        tzdata \
-        wget" \
-     && apt -y install ${PAKETLER}
-
-RUN mkdir /ortakatman \
-    && wget https://download.java.net/java/GA/jdk11/9/GPL/openjdk-${OPENJDK_VERSION}_linux-x64_bin.tar.gz \
-    && tar -xzvf openjdk-${OPENJDK_VERSION}_linux-x64_bin.tar.gz \
-    && mv jdk-${OPENJDK_VERSION} /ortakatman/java11 \
-    && rm -f openjdk-${OPENJDK_VERSION}_linux-x64_bin.tar.gz \
-    && update-alternatives --install "/usr/bin/java" "java" "/ortakatman/java11/bin/java" 0 \
-    && apt clean
-
-WORKDIR /ortakatman
-
-ENV SHELL=/bin/bash
-
-#
+WORKDIR /opt/java
 
 # Prepare environment
 ADD motd /root/workspace/motd
