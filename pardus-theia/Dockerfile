@@ -3,8 +3,7 @@ FROM pardus/yirmibir
 
 # Update and install
 RUN apt-get update && \
-    apt-get install -y make pkg-config gcc g++ python3 libx11-dev libxkbfile-dev libsecret-1-dev curl gnupg && \
-    apt-get update
+    apt-get install -y make pkg-config gcc g++ python3 libx11-dev libxkbfile-dev libsecret-1-dev
 
 # Install Node.js, Yarn and required dependencies
 RUN apt-get update
@@ -18,10 +17,12 @@ RUN apt-get -y install nodejs
 
 
 # Build Theia
+RUN apt-get update
+RUN npm install -g yarn
+RUN yarn global add node-gyp
 WORKDIR /home/ide
 ADD package.json ./package.json
 ENV NODE_OPTIONS="--max_old_space_size=4096"
-RUN npm install -g yarn
 RUN yarn install
 RUN yarn theia build
 RUN npx theia download:plugins

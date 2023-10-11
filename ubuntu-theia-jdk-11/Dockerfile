@@ -83,7 +83,8 @@ COPY --from=0 /home/ide /root/ide
 #Set env variables
 ENV JAVA_HOME=/opt/java \
     PATH="${PATH}:/opt/java/bin" \
-    TZ="Europe/Istanbul"
+    TZ="Europe/Istanbul" \
+    DEBIAN_FRONTEND=noninteractive
 
 # Install required packages
 RUN apt-get update && apt-get install -y \
@@ -93,6 +94,8 @@ RUN apt-get update && apt-get install -y \
 ARG OPENJDK_VERSION=11.0.2
 
 RUN mkdir -p /opt/java \
+    export DEBIAN_FRONTEND=noninteractive \
+    echo "Europe/Istanbul" > /etc/timezone \
     && wget -O openjdk.tar.gz https://download.java.net/java/GA/jdk11/9/GPL/openjdk-${OPENJDK_VERSION}_linux-x64_bin.tar.gz \
     && tar -xzvf openjdk.tar.gz -C /opt/java --strip-components=1 \
     && rm openjdk.tar.gz
