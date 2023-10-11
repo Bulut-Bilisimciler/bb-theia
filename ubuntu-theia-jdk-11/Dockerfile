@@ -98,7 +98,9 @@ RUN mkdir -p /opt/java \
     echo "Europe/Istanbul" > /etc/timezone \
     && wget -O openjdk.tar.gz https://download.java.net/java/GA/jdk11/9/GPL/openjdk-${OPENJDK_VERSION}_linux-x64_bin.tar.gz \
     && tar -xzvf openjdk.tar.gz -C /opt/java --strip-components=1 \
-    && rm openjdk.tar.gz
+    && update-alternatives --install "/usr/bin/java" "java" "/opt/java/bin/java" 0 \
+    && rm openjdk.tar.gz \
+    && apt clean
 
 WORKDIR /opt/java
 
