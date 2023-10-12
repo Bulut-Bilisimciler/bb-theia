@@ -1,25 +1,11 @@
 # STAGE 1 - Build Theia
-FROM pardus/yirmibir
+FROM node:18-alpine
 
 # Update and install
-RUN apt-get update && \
-    apt-get install -y make pkg-config gcc g++ python3 libx11-dev libxkbfile-dev libsecret-1-dev
+RUN apk update && \
+    apk add --no-cache make gcc g++ python3 libx11-dev libxkbfile-dev libsecret-dev libc-dev libsecret curl gnupg 
 
-# Install Node.js, Yarn and required dependencies
-RUN apt-get update
-RUN apt-get -y install curl gnupg ca-certificates
-RUN mkdir -p /etc/apt/keyrings
-RUN curl -fsSL https://deb.nodesource.com/gpgkey/nodesource-repo.gpg.key | gpg --dearmor -o /etc/apt/keyrings/nodesource.gpg
-ENV NODE_MAJOR=18
-RUN echo "deb [signed-by=/etc/apt/keyrings/nodesource.gpg] https://deb.nodesource.com/node_$NODE_MAJOR.x nodistro main" | tee /etc/apt/sources.list.d/nodesource.list
-RUN apt-get update
-RUN apt-get -y install nodejs
-
-
-# Build Theia
-RUN apt-get update
-RUN npm install -g yarn
-RUN yarn global add node-gyp
+# Build Theia 
 WORKDIR /home/ide
 ADD package.json ./package.json
 ENV NODE_OPTIONS="--max_old_space_size=4096"
@@ -36,25 +22,13 @@ RUN yarn --production && \
 
 
 # STAGE 2 - Setup the final image
-FROM pardus/yirmibir
+FROM node:18-alpine
 
 # Env variables
 ENV HOME=/root \
     SHELL=/bin/bash \
     THEIA_DEFAULT_PLUGINS=local-dir:/home/ide/plugins \
     USE_LOCAL_GIT=true
-
-# Install Node.js, Yarn and required dependencies
-RUN apt-get update
-RUN apt-get -y install curl gnupg ca-certificates
-RUN mkdir -p /etc/apt/keyrings
-RUN curl -fsSL https://deb.nodesource.com/gpgkey/nodesource-repo.gpg.key | gpg --dearmor -o /etc/apt/keyrings/nodesource.gpg
-ENV NODE_MAJOR=18
-RUN echo "deb [signed-by=/etc/apt/keyrings/nodesource.gpg] https://deb.nodesource.com/node_$NODE_MAJOR.x nodistro main" | tee /etc/apt/sources.list.d/nodesource.list
-RUN apt-get update
-RUN apt-get -y install nodejs 
-RUN npm install -g yarn
-
 
 RUN mkdir -p /root/workspace && \
     mkdir -p /root/ide && \
@@ -73,15 +47,8 @@ RUN mkdir -p /root/workspace && \
     # Setup settings (file icons theme)
     echo '{"workbench.iconTheme": "vs-seti", "editor.mouseWheelZoom": true, "editor.fontSize": 18, "terminal.integrated.fontSize": 18 }' > /root/.theia/settings.json
 
-
 # Copy files from previous stage 
 COPY --from=0 /home/ide /root/ide
-
-# ! ADD CUSTOM IMPLEMENTATION 
-
-# Whenever possible, install tools using the distro package manager
-RUN apt-get update && \
-    apt-get install -y git openssh-client bash libsecret-1-0 jq curl socat
 
 # Prepare environment
 ADD motd /root/workspace/motd
@@ -94,6 +61,6 @@ EXPOSE 3030
 # COPY bb.service /lib/systemd/system/
 # RUN chmod +x /usr/bin/script.sh && \
 #     ln -sf /lib/systemd/system/bb.service \
-#     /etc/systemd/system/default.target.wants/bb.service
+#     /etc/systemd/system/multi-user.target.wants/bb.service
 
 CMD [ "node","/root/ide/src-gen/backend/main.js", "--hostname=0.0.0.0", "--port=3030", "--plugins=local-dir:/root/ide/plugins"]

@@ -6,9 +6,11 @@ RUN dnf -y update && \
     dnf install -y make pkg-config gcc g++ python3 libx11-devel libxkbfile-devel libsecret-1-devel curl gnupg && \
     dnf clean all
 
+# dnf install -y make pkg-config gcc python3 libX11-devel libsecret-devel curl gnupg
+
 # Install Node.js, Yarn and required dependencies
-RUN curl -sL https://deb.nodesource.com/setup_18.x  | bash -
-RUN dnf -y install nodejs && \
+RUN curl -sL https://rpm.nodesource.com/setup_18.x -o nodesource_setup.sh | bash nodesource_setup.sh
+RUN dnf install nodejs -y && \
     # remove useless files from the current layer
     dnf clean all 
 
@@ -40,13 +42,13 @@ ENV HOME=/root \
 
 # Install Node.js, Yarn and required dependencies
 RUN dnf -y update && \
-    dnf -y install curl gnupg software-properties-common gcc \
-    git openssh-client bash libsecret-1-0 jq curl socat && \
-    curl -sL https://deb.nodesource.com/setup_18.x  | bash - && \
+    dnf install -y curl gnupg gcc git openssh-clients bash libsecret-devel jq socat && \
+    curl -sL https://rpm.nodesource.com/setup_18.x -o nodesource_setup.sh | bash nodesource_setup.sh && \
     dnf -y install nodejs && \
     # remove useless files from the current layer
     dnf clean all 
 
+# dnf install -y curl gnupg gcc git openssh-clients bash libsecret-devel jq socat
 
 RUN mkdir -p /root/workspace && \
     mkdir -p /root/ide && \

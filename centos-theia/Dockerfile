@@ -2,15 +2,14 @@
 FROM quay.io/centos/centos:stream8
 
 # Update and install
-RUN dnf update && \
-    dnf install -y make pkg-config gcc g++ python3 libx11-dev libxkbfile-dev libsecret-1-dev curl gnupg && \
-    dnf update
+RUN yum update -y && \
+    yum install -y make pkg-config gcc-c++ python3 libX11-devel libsecret-devel curl gnupg
 
 # Install Node.js, Yarn and required dependencies
-RUN curl -sL https://deb.nodesource.com/setup_18.x  | bash -
-RUN dnf -y install nodejs \
+RUN curl -sL https://rpm.nodesource.com/setup_18.x -o nodesource_setup.sh | bash nodesource_setup.sh
+RUN yum -y install nodejs \
     # remove useless files from the current layer
-    && dnf clean all 
+    && yum clean all 
 
 # Build Theia
 WORKDIR /home/ide
@@ -39,14 +38,12 @@ ENV HOME=/root \
     USE_LOCAL_GIT=true
 
 # Install Node.js, Yarn and required dependencies
-RUN dnf update -y && dnf -y install curl gnupg software-properties-common gcc \
-    git openssh-client bash libsecret-1-0 jq curl socat && \
-    add-apt-repository -y ppa:deadsnakes/ppa
-RUN curl -sL https://deb.nodesource.com/setup_18.x  | bash -
-RUN dnf -y install nodejs \
+RUN yum update -y && yum -y install curl gnupg gcc \
+    git openssh-clients bash libsecret jq curl socat 
+RUN curl -sL https://rpm.nodesource.com/setup_18.x -o nodesource_setup.sh | bash nodesource_setup.sh
+RUN yum -y install nodejs \
     # remove useless files from the current layer
-    && dnf clean all 
-
+    && yum clean all 
 
 RUN mkdir -p /root/workspace && \
     mkdir -p /root/ide && \
