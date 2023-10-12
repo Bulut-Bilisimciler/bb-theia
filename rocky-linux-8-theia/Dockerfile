@@ -3,13 +3,11 @@ FROM rockylinux:8
 
 # Update and install
 RUN dnf -y update && \
-    dnf install -y make pkg-config gcc g++ python3 libx11-devel libxkbfile-devel libsecret-1-devel curl gnupg && \
+    dnf install -y make pkg-config gcc python3 libX11-devel libsecret-devel curl gnupg && \
     dnf clean all
 
-# dnf install -y make pkg-config gcc python3 libX11-devel libsecret-devel curl gnupg
-
 # Install Node.js, Yarn and required dependencies
-RUN curl -sL https://rpm.nodesource.com/setup_18.x -o nodesource_setup.sh | bash nodesource_setup.sh
+RUN curl -sL https://rpm.nodesource.com/setup_18.x | bash -
 RUN dnf install nodejs -y && \
     # remove useless files from the current layer
     dnf clean all 
@@ -19,6 +17,8 @@ WORKDIR /home/ide
 ADD package.json ./package.json
 ENV NODE_OPTIONS="--max_old_space_size=4096"
 RUN npm install -g yarn
+RUN npm install -g node-gyp
+RUN npm rebuild node-pty
 RUN yarn install
 RUN yarn theia build
 RUN npx theia download:plugins
@@ -29,7 +29,6 @@ RUN yarn --production && \
     echo *.spec.* >> .yarnclean && \
     yarn autoclean --force && \
     yarn cache clean
-
 
 # STAGE 2 - Setup the final image
 FROM rockylinux:8
@@ -43,12 +42,10 @@ ENV HOME=/root \
 # Install Node.js, Yarn and required dependencies
 RUN dnf -y update && \
     dnf install -y curl gnupg gcc git openssh-clients bash libsecret-devel jq socat && \
-    curl -sL https://rpm.nodesource.com/setup_18.x -o nodesource_setup.sh | bash nodesource_setup.sh && \
+    curl -sL https://rpm.nodesource.com/setup_18.x | bash - && \
     dnf -y install nodejs && \
     # remove useless files from the current layer
     dnf clean all 
-
-# dnf install -y curl gnupg gcc git openssh-clients bash libsecret-devel jq socat
 
 RUN mkdir -p /root/workspace && \
     mkdir -p /root/ide && \

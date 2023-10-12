@@ -9,6 +9,7 @@ RUN apk update && \
 WORKDIR /home/ide
 ADD package.json ./package.json
 ENV NODE_OPTIONS="--max_old_space_size=4096"
+RUN npm install -g node-pty node-gyp
 RUN yarn install
 RUN yarn theia build
 RUN npx theia download:plugins
@@ -30,6 +31,9 @@ ENV HOME=/root \
     THEIA_DEFAULT_PLUGINS=local-dir:/home/ide/plugins \
     USE_LOCAL_GIT=true
 
+# Update and install
+RUN apk add --no-cache curl gnupg gcc git openssh-client bash libsecret-dev jq socat
+
 RUN mkdir -p /root/workspace && \
     mkdir -p /root/ide && \
     mkdir -p /root/.theia && \
@@ -47,6 +51,7 @@ RUN mkdir -p /root/workspace && \
     # Setup settings (file icons theme)
     echo '{"workbench.iconTheme": "vs-seti", "editor.mouseWheelZoom": true, "editor.fontSize": 18, "terminal.integrated.fontSize": 18 }' > /root/.theia/settings.json
 
+
 # Copy files from previous stage 
 COPY --from=0 /home/ide /root/ide
 
@@ -57,10 +62,5 @@ USER root
 
 # Example of a systemd service created to showcase a custom entry-point.
 EXPOSE 3030
-# COPY script.sh /usr/bin/
-# COPY bb.service /lib/systemd/system/
-# RUN chmod +x /usr/bin/script.sh && \
-#     ln -sf /lib/systemd/system/bb.service \
-#     /etc/systemd/system/multi-user.target.wants/bb.service
 
 CMD [ "node","/root/ide/src-gen/backend/main.js", "--hostname=0.0.0.0", "--port=3030", "--plugins=local-dir:/root/ide/plugins"]
