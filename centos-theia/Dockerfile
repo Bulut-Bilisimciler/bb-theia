@@ -2,11 +2,11 @@
 FROM quay.io/centos/centos:stream8
 
 # Update and install
-RUN yum update -y && \
+RUN yum -y update && \
     yum install -y make pkg-config gcc-c++ python3 libX11-devel libsecret-devel curl gnupg
 
 # Install Node.js, Yarn and required dependencies
-RUN curl -sL https://rpm.nodesource.com/setup_18.x -o nodesource_setup.sh | bash nodesource_setup.sh
+RUN curl -sL https://rpm.nodesource.com/setup_18.x | bash -
 RUN yum -y install nodejs \
     # remove useless files from the current layer
     && yum clean all 
@@ -40,7 +40,7 @@ ENV HOME=/root \
 # Install Node.js, Yarn and required dependencies
 RUN yum update -y && yum -y install curl gnupg gcc \
     git openssh-clients bash libsecret jq curl socat 
-RUN curl -sL https://rpm.nodesource.com/setup_18.x -o nodesource_setup.sh | bash nodesource_setup.sh
+RUN curl -sL https://rpm.nodesource.com/setup_18.x | bash -
 RUN yum -y install nodejs \
     # remove useless files from the current layer
     && yum clean all 
