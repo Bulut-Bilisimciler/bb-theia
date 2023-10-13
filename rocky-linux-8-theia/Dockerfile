@@ -3,8 +3,8 @@ FROM rockylinux:8
 
 # Update and install
 RUN dnf -y update && \
-    dnf install -y make pkg-config gcc python3 libX11-devel libsecret-devel curl gnupg && \
-    dnf groupinstall "Development Tools" && \
+    dnf install -y make pkg-config gcc python3 libX11-devel libsecret-devel curl gnupg 
+RUN dnf groupinstall -y "Development Tools" && \
     dnf clean all
 
 # Install Node.js, Yarn and required dependencies
