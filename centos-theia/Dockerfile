@@ -2,14 +2,16 @@
 FROM quay.io/centos/centos:stream8
 
 # Update and install
-RUN yum -y update && \
-    yum install -y make pkg-config gcc-c++ python3 libX11-devel libsecret-devel curl gnupg
+RUN dnf -y update && \
+    dnf install -y make pkg-config gcc-c++ python3 libX11-devel libsecret-devel curl gnupg && \ 
+    dnf groupinstall "Development Tools" && \
+    dnf clean all
 
 # Install Node.js, Yarn and required dependencies
 RUN curl -sL https://rpm.nodesource.com/setup_18.x | bash -
-RUN yum -y install nodejs \
+RUN dnf -y install nodejs \
     # remove useless files from the current layer
-    && yum clean all 
+    && dnf clean all 
 
 # Build Theia
 WORKDIR /home/ide
@@ -38,12 +40,12 @@ ENV HOME=/root \
     USE_LOCAL_GIT=true
 
 # Install Node.js, Yarn and required dependencies
-RUN yum update -y && yum -y install curl gnupg gcc \
+RUN dnf -y update && dnf -y install curl gnupg gcc \
     git openssh-clients bash libsecret jq curl socat 
 RUN curl -sL https://rpm.nodesource.com/setup_18.x | bash -
-RUN yum -y install nodejs \
+RUN dnf -y install nodejs \
     # remove useless files from the current layer
-    && yum clean all 
+    && dnf clean all 
 
 RUN mkdir -p /root/workspace && \
     mkdir -p /root/ide && \
