@@ -43,7 +43,7 @@ ENV HOME=/root \
     USE_LOCAL_GIT=true
 
 # Install Node.js, Yarn and required dependencies
-RUN apt-get update -y && apt-get -y install curl gnupg software-properties-common gcc \
+RUN apt-get update -y && apt-get -y install curl gnupg software-properties-common gcc git vim \
     git openssh-client bash libsecret-1-0 jq curl socat && \
     add-apt-repository -y ppa:deadsnakes/ppa
 RUN curl -sL https://deb.nodesource.com/setup_18.x  | bash -
