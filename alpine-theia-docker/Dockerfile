@@ -34,24 +34,11 @@ ENV HOME=/root \
 # Update and install
 RUN apk add --no-cache curl gnupg gcc git openssh-client bash libsecret-dev jq socat vim
 
-# docker
-RUN apk add --update docker && \
-    rm  -rf /tmp/* /var/cache/apk/*
-
 # supervisord
 RUN apk add --update supervisor && rm  -rf /tmp/* /var/cache/apk/*
 RUN mkdir -p /var/log/supervisor
 #COPY supervisord.conf /etc/supervisor/conf.d/supervisord.conf
 COPY supervisord.conf /etc/
-
-# sshd
-RUN apk add --update openssh && rm  -rf /tmp/* /var/cache/apk/*
-RUN mkdir /var/run/sshd
-RUN echo 'root:root' | chpasswd
-RUN sed -ri 's/^#?PermitRootLogin\s+.*/PermitRootLogin yes/' /etc/ssh/sshd_config
-RUN sed -ri 's/UsePAM yes/#UsePAM yes/g' /etc/ssh/sshd_config
-RUN mkdir /root/.ssh
-RUN ssh-keygen -f /etc/ssh/ssh_host_rsa_key -N '' -t rsa
 
 RUN mkdir -p /root/workspace && \
     mkdir -p /root/ide && \
@@ -81,7 +68,6 @@ USER root
 
 # Example of a systemd service created to showcase a custom entry-point.
 EXPOSE 3030
-EXPOSE 22
 
 # entrypoint
 COPY docker-entrypoint.sh /usr/bin/docker-entrypoint.sh
