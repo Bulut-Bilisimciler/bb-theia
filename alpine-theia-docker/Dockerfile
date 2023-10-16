@@ -34,11 +34,6 @@ ENV HOME=/root \
 # Update and install
 RUN apk add --no-cache curl gnupg gcc git openssh-client bash libsecret-dev jq socat vim
 
-# supervisord
-RUN apk add --update supervisor && rm  -rf /tmp/* /var/cache/apk/*
-RUN mkdir -p /var/log/supervisor
-#COPY supervisord.conf /etc/supervisor/conf.d/supervisord.conf
-COPY supervisord.conf /etc/
 
 RUN mkdir -p /root/workspace && \
     mkdir -p /root/ide && \

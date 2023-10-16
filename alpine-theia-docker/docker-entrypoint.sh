@@ -1,20 +1,17 @@
 #!/bin/sh
-set -e
+# ENV values PRELOAD_FILE_URL, PRELOAD_FILE_DIR
+# We need to try to wget the file from the URL to the demanded directory.
+# If env's not set skip. If file already overwrite
+# If file could not fetched write "Could not load file contact administrator. https://bulutbilisimciler.com/destek"
 
-# sys container init:
-#
-# If no command is passed to the container, supervisord becomes init and
-# starts all its configured programs (per /etc/supervisor/conf.f/supervisord.conf).
-#
-# If a command is passed to the container, it runs in the foreground;
-# supervisord runs in the background and starts all its configured
-# programs.
-#
-# In either case, supervisord always starts its configured programs.
-
-if [ "$#" -eq 0 ] || [ "${1#-}" != "$1" ]; then
-  exec supervisord -n "$@"
-else
-  supervisord -c /etc/supervisor/conf.d/supervisord.conf &
-  exec "$@"
+if [ -n "$PRELOAD_FILE_URL" ] && [ -n "$PRELOAD_FILE_DIR" ]
+then
+    echo "Downloading file from $PRELOAD_FILE_URL to $PRELOAD_FILE_DIR"
+    if wget -O $PRELOAD_FILE_DIR $PRELOAD_FILE_URL; then
+        echo "Shell OK"
+    else
+        echo "Could not load file. Please contact administrator at https://bulutbilisimciler.com/destek"
+    fi
 fi
+
+node /root/ide/src-gen/backend/main.js --hostname=0.0.0.0 --port=3030 --plugins=local-dir:/root/ide/plugins
