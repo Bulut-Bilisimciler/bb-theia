@@ -1,5 +1,5 @@
 # STAGE 1 - Build Theia
-FROM centos:7
+FROM quay.io/centos/centos:stream8
 
 # Update and install
 RUN dnf -y update && \
@@ -31,7 +31,7 @@ RUN yarn --production && \
 
 
 # STAGE 2 - Setup the final image
-FROM centos:7
+FROM quay.io/centos/centos:stream8
 
 # Env variables
 ENV HOME=/root \
