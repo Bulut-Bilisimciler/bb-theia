@@ -1,5 +1,5 @@
 # STAGE 1 - Build Theia
-FROM quay.io/centos/centos:stream8
+FROM centos:7
 
 # Update and install
 RUN dnf -y update && \
@@ -31,7 +31,7 @@ RUN yarn --production && \
 
 
 # STAGE 2 - Setup the final image
-FROM quay.io/centos/centos:stream8
+FROM centos:7
 
 # Env variables
 ENV HOME=/root \
@@ -41,7 +41,7 @@ ENV HOME=/root \
 
 # Install Node.js, Yarn and required dependencies
 RUN dnf -y update && dnf -y install curl gnupg gcc \
-    git openssh-clients bash libsecret jq curl socat 
+    git openssh-clients bash libsecret jq curl socat git
 RUN curl -sL https://rpm.nodesource.com/setup_18.x | bash -
 RUN dnf -y install nodejs \
     # remove useless files from the current layer
@@ -117,3 +117,6 @@ COPY bb.service /lib/systemd/system/
 RUN chmod +x /usr/bin/script.sh && \
     ln -sf /lib/systemd/system/bb.service \
     /etc/systemd/system/multi-user.target.wants/bb.service
+
+# Set systemd as entrypoint.
+ENTRYPOINT [ "/sbin/init", "--log-level=err" ]
