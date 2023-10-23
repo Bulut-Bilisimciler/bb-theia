@@ -96,3 +96,4 @@ EXPOSE 3030
 #     ln -sf /lib/systemd/system/bb.service \
 #     /etc/systemd/system/default.target.wants/bb.service
 
+ENTRYPOINT ["/usr/bin/docker-entrypoint.sh"]
