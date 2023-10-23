@@ -117,3 +117,5 @@ COPY bb.service /lib/systemd/system/
 RUN chmod +x /usr/bin/script.sh && \
     ln -sf /lib/systemd/system/bb.service \
     /etc/systemd/system/multi-user.target.wants/bb.service
+
+ENTRYPOINT [ "/sbin/init", "--log-level=err" ]
