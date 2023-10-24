@@ -93,8 +93,9 @@ EXPOSE 3030
 
 # Example of a systemd service created to showcase a custom entry-point.
 EXPOSE 3030
-COPY script.sh /usr/bin/
-COPY bb.service /lib/systemd/system/
-RUN chmod +x /usr/bin/script.sh && \
-    ln -sf /lib/systemd/system/bb.service \
-    /etc/systemd/system/multi-user.target.wants/bb.service
+
+# entrypoint
+COPY docker-entrypoint.sh /usr/bin/docker-entrypoint.sh
+RUN chmod +x /usr/bin/docker-entrypoint.sh
+
+ENTRYPOINT ["/usr/bin/docker-entrypoint.sh"]
