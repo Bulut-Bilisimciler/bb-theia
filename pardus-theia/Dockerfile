@@ -79,9 +79,47 @@ COPY --from=0 /home/ide /root/ide
 
 # ! ADD CUSTOM IMPLEMENTATION
 
+# Systemd installation
+RUN apt-get update &&                            \
+    apt-get install -y --no-install-recommends   \
+            systemd                              \
+            systemd-sysv                         \
+            libsystemd0                          \
+            ca-certificates                      \
+            dbus                                 \
+            iptables                             \
+            iproute2                             \
+            kmod                                 \
+            locales                              \
+            sudo                                 \
+            udev &&                              \
+    # Prevents journald from reading kernel messages from /dev/kmsg
+    echo "ReadKMsg=no" >> /etc/systemd/journald.conf &&               \
+    # Housekeeping
+    apt-get clean -y &&                                               \
+    rm -rf                                                            \
+    /var/cache/debconf/*                                           \
+    /var/lib/apt/lists/*                                           \
+    /var/log/*                                                     \
+    /tmp/*                                                         \
+    /var/tmp/*                                                     \
+    /usr/share/doc/*                                               \
+    /usr/share/man/*                                               \
+    /usr/share/local/* &&                                          \
+    # Create default 'admin/admin' user
+    useradd --create-home --shell /bin/bash admin && echo "admin:admin" | chpasswd && adduser admin sudo
+
+# Disable systemd services/units that are unnecessary within a container.
+RUN systemctl mask systemd-udevd.service \
+    systemd-udevd-kernel.socket \
+    systemd-udevd-control.socket \
+    systemd-modules-load.service \
+    sys-kernel-debug.mount \
+    sys-kernel-tracing.mount
+
 # Whenever possible, install tools using the distro package manager
 RUN apt-get update && \
-    apt-get install -y git openssh-client bash libsecret-1-0 jq curl socat
+    apt-get install -y git openssh-client bash libsecret-1-0 jq curl socat wget git
 
 # Prepare environment
 ADD motd /root/workspace/motd
@@ -92,10 +130,14 @@ USER root
 EXPOSE 3030
 
 # Example of a systemd service created to showcase a custom entry-point.
-EXPOSE 3030
+COPY script.sh /usr/bin/
+COPY bb.service /lib/systemd/system/
+RUN chmod +x /usr/bin/script.sh && \
+    ln -sf /lib/systemd/system/bb.service \
+    /etc/systemd/system/multi-user.target.wants/bb.service
 
-# entrypoint
-COPY docker-entrypoint.sh /usr/bin/docker-entrypoint.sh
-RUN chmod +x /usr/bin/docker-entrypoint.sh
+# Make use of stopsignal (instead of sigterm) to stop systemd containers.
+STOPSIGNAL SIGRTMIN+3
 
-ENTRYPOINT ["/usr/bin/docker-entrypoint.sh"]
+# Set systemd as entrypoint.
+ENTRYPOINT [ "/sbin/init", "--log-level=err" ]
