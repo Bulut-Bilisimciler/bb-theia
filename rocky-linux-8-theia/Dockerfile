@@ -42,7 +42,7 @@ ENV HOME=/root \
 
 # Install Node.js, Yarn and required dependencies
 RUN dnf -y update && \
-    dnf install -y curl gnupg gcc git openssh-clients bash libsecret-devel jq socat && \
+    dnf install -y curl gnupg gcc git openssh-clients bash libsecret-devel jq socat tmux && \
     curl -sL https://rpm.nodesource.com/setup_18.x | bash - && \
     dnf -y install nodejs && \
     # remove useless files from the current layer
