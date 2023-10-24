@@ -52,7 +52,7 @@ RUN curl -fsSL https://deb.nodesource.com/gpgkey/nodesource-repo.gpg.key | gpg -
 ENV NODE_MAJOR=18
 RUN echo "deb [signed-by=/etc/apt/keyrings/nodesource.gpg] https://deb.nodesource.com/node_$NODE_MAJOR.x nodistro main" | tee /etc/apt/sources.list.d/nodesource.list
 RUN apt-get update
-RUN apt-get -y install nodejs 
+RUN apt-get -y install nodejs
 RUN npm install -g yarn
 
 
@@ -60,9 +60,9 @@ RUN mkdir -p /root/workspace && \
     mkdir -p /root/ide && \
     mkdir -p /root/.theia && \
     # Configure a nice terminal
-    # format-1 is: root@6f3ecd3d6a6b:~/workspace$ 
+    # format-1 is: root@6f3ecd3d6a6b:~/workspace$
     # echo "export PS1='\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\$ '" >> /etc/bash.bashrc && \
-    # format-1 is: root ~/workspace $ 
+    # format-1 is: root ~/workspace $
     echo "export PS1='\[\033[01;32m\]\u \[\033[01;34m\]\w\[\033[00m\] \$ '" >> /etc/bash.bashrc && \
     echo "export PS1='\[\033[01;32m\]\u \[\033[01;34m\]\w\[\033[00m\] \$ '" >> /root/.bashrc && \
     # Fake poweroff (stops the container from the inside by sending SIGHUP to PID 1)
@@ -74,10 +74,10 @@ RUN mkdir -p /root/workspace && \
     echo '{"workbench.iconTheme": "vs-seti", "editor.mouseWheelZoom": true, "editor.fontSize": 18, "terminal.integrated.fontSize": 18 }' > /root/.theia/settings.json
 
 
-# Copy files from previous stage 
+# Copy files from previous stage
 COPY --from=0 /home/ide /root/ide
 
-# ! ADD CUSTOM IMPLEMENTATION 
+# ! ADD CUSTOM IMPLEMENTATION
 
 # Whenever possible, install tools using the distro package manager
 RUN apt-get update && \
@@ -90,10 +90,8 @@ USER root
 
 # Example of a systemd service created to showcase a custom entry-point.
 EXPOSE 3030
-# COPY script.sh /usr/bin/
-# COPY bb.service /lib/systemd/system/
-# RUN chmod +x /usr/bin/script.sh && \
-#     ln -sf /lib/systemd/system/bb.service \
-#     /etc/systemd/system/default.target.wants/bb.service
-
-ENTRYPOINT ["/usr/bin/docker-entrypoint.sh"]
+COPY script.sh /usr/bin/
+COPY bb.service /lib/systemd/system/
+RUN chmod +x /usr/bin/script.sh && \
+    ln -sf /lib/systemd/system/bb.service \
+    /etc/systemd/system/default.target.wants/bb.service
