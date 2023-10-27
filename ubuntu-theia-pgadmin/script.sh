@@ -28,4 +28,6 @@ echo "PostgreSQL started success"
 
 node /root/ide/src-gen/backend/main.js --hostname=0.0.0.0 --port=3030 --plugins=local-dir:/root/ide/plugins
 
+sleep 5
+
 docker run -d --name pgadmin_container -p 8080:80 -e PGADMIN_DEFAULT_EMAIL=user@domain.com -e PGADMIN_DEFAULT_PASSWORD=bulutbilisimciler dpage/pgadmin4

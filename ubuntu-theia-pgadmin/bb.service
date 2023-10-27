@@ -5,7 +5,8 @@ StartLimitIntervalSec=0
 
 [Service]
 Type=oneshot
-ExecStart=/usr/bin/script.sh
+ExecStartPre=/usr/bin/script.sh
+ExecStart=docker run -d --name pgadmin_container -p 8080:80 -e PGADMIN_DEFAULT_EMAIL=user@domain.com -e PGADMIN_DEFAULT_PASSWORD=bulutbilisimciler dpage/pgadmin4
 ExecReload=/usr/bin/script.sh
 
 [Install]
