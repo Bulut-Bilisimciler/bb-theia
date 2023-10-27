@@ -18,6 +18,12 @@ fi
 # PostgreSQL hizmetini başlat
 systemctl start postgresql
 sleep 5
+
+# "test" adında bir veritabanı oluştur
+su - postgres -c "psql -U postgres -c 'CREATE DATABASE bulutdb;'"
+# "test" veritabanına bağlan ve init.sql dosyasını çalıştır
+su - postgres -c 'psql -U postgres -d bulutdb -f /home/mock/init.sql'
+
 echo "PostgreSQL started success"
 
 node /root/ide/src-gen/backend/main.js --hostname=0.0.0.0 --port=3030 --plugins=local-dir:/root/ide/plugins
