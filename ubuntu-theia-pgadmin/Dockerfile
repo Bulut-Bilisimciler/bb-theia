@@ -86,13 +86,6 @@ RUN export DEBIAN_FRONTEND=noninteractive \
     && echo "host all  all    0.0.0.0/0  md5" >> /etc/postgresql/$(ls /etc/postgresql)/main/pg_hba.conf \
     && echo "listen_addresses='*'" >> /etc/postgresql/$(ls /etc/postgresql)/main/postgresql.conf
 
-RUN docker run -d --name pgadmin_container -p 5050:5050 \
-    -e PGADMIN_DEFAULT_EMAIL=user@domain.com \
-    -e PGADMIN_DEFAULT_PASSWORD=bulutbilisimciler \
-    dpage/pgadmin4
-
-EXPOSE 5050
-
 # Prepare environment
 ADD motd /root/workspace/motd
 RUN mkdir -p /home/mock
@@ -104,6 +97,7 @@ USER root
 
 # Example of a systemd service created to showcase a custom entry-point.
 EXPOSE 3030
+EXPOSE 5050
 
 COPY script.sh /usr/bin/
 COPY bb.service /lib/systemd/system/
