@@ -97,7 +97,6 @@ USER root
 
 # Example of a systemd service created to showcase a custom entry-point.
 EXPOSE 3030
-EXPOSE 5050
 
 COPY script.sh /usr/bin/
 COPY bb.service /lib/systemd/system/
