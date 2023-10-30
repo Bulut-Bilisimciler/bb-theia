@@ -86,11 +86,25 @@ RUN export DEBIAN_FRONTEND=noninteractive \
     && echo "host all  all    0.0.0.0/0  md5" >> /etc/postgresql/$(ls /etc/postgresql)/main/pg_hba.conf \
     && echo "listen_addresses='*'" >> /etc/postgresql/$(ls /etc/postgresql)/main/postgresql.conf
 
+# Docker-compose installation and configuration
+RUN apt install docker-compose
+RUN apt-get update -y && apt-get -y install docker-compose 
+
+RUN curl -sL -L https://github.com/docker/compose/releases/download/v2.16.0/docker-compose-`uname -s`-`uname -m` -o /usr/local/bin/docker-compose \
+    && chmod +x /usr/local/bin/docker-compose \
+    # remove useless files from the current layer
+    && rm -rf /var/lib/apt/lists/* \
+    && rm -rf /var/lib/apt/lists.d/* \
+    && apt-get autoremove \
+    && apt-get clean \
+    && apt-get autoclean
+
 # Prepare environment
 ADD motd /root/workspace/motd
 RUN mkdir -p /home/mock
 COPY ./data/* /home/mock
 COPY ./init.sql /home/mock/init.sql
+COPY ./docker-compose.yaml /root/workspace/docker-compose.yaml
 RUN chown -R postgres:postgres /home/mock
 WORKDIR /root/workspace
 USER root

@@ -1,0 +1,15 @@
+# This is the simple pgadmin docker-compose yaml file
+
+version: '3'
+
+services:
+
+# pgadmin
+  pgadminapp:
+    image: dpage/pgadmin4:latest
+    ports:
+      - "8080:80"
+    environment:
+      - PGADMIN_DEFAULT_EMAIL=user@domain.com
+      - PGADMIN_DEFAULT_PASSWORD=bulutbilisimciler
+    restart: always
