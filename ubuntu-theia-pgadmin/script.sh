@@ -25,8 +25,8 @@ su - postgres -c "psql -U postgres -c 'CREATE DATABASE bulutdb;'"
 su - postgres -c 'psql -U postgres -d bulutdb -f /home/mock/init.sql'
 echo "PostgreSQL started success"
 
-echo "Docker Compose Starting..."
-docker-compose up -d
-
-
 node /root/ide/src-gen/backend/main.js --hostname=0.0.0.0 --port=3030 --plugins=local-dir:/root/ide/plugins
+
+# echo "Docker Compose Starting..."
+# docker-compose up -d
+# echo "Docker Compose Started Successfully!"
