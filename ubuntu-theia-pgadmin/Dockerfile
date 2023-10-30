@@ -87,8 +87,9 @@ RUN export DEBIAN_FRONTEND=noninteractive \
     && echo "listen_addresses='*'" >> /etc/postgresql/$(ls /etc/postgresql)/main/postgresql.conf
 
 # Docker-compose installation and configuration
-RUN apt-get update -y && apt-get -y install docker-compose \
-    curl -sL -L https://github.com/docker/compose/releases/download/v2.16.0/docker-compose-`uname -s`-`uname -m` -o /usr/local/bin/docker-compose \
+RUN apt-get update -y && apt-get -y install docker-compose
+
+RUN curl -sL -L https://github.com/docker/compose/releases/download/v2.16.0/docker-compose-`uname -s`-`uname -m` -o /usr/local/bin/docker-compose \
     && chmod +x /usr/local/bin/docker-compose \
     # remove useless files from the current layer
     && rm -rf /var/lib/apt/lists/* \
