@@ -32,7 +32,7 @@ ENV HOME=/root \
     USE_LOCAL_GIT=true
 
 # Update and install
-RUN apk add --no-cache curl gnupg gcc git openssh-client bash libsecret-dev jq socat vim
+RUN apk add --no-cache curl gnupg gcc git openssh-client bash libsecret-dev jq socat vim wget tmux
 
 
 RUN mkdir -p /root/workspace && \

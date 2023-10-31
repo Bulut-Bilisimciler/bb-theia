@@ -40,8 +40,8 @@ ENV HOME=/root \
     USE_LOCAL_GIT=true
 
 # Install Node.js, Yarn and required dependencies
-RUN dnf -y update && dnf -y install curl gnupg gcc \
-    git openssh-clients bash libsecret jq curl socat git
+RUN dnf -y update && dnf -y install curl gnupg gcc wget \
+    git openssh-clients bash libsecret jq curl socat tmux
 RUN curl -sL https://rpm.nodesource.com/setup_18.x | bash -
 RUN dnf -y install nodejs \
     # remove useless files from the current layer

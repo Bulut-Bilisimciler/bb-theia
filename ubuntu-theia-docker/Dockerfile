@@ -44,7 +44,7 @@ ENV HOME=/root \
 
 # Install Node.js, Yarn and required dependencies
 RUN apt-get update -y && apt-get -y install curl gnupg software-properties-common gcc git vim \
-    git openssh-client bash libsecret-1-0 jq curl socat && \
+    git openssh-client bash libsecret-1-0 jq wget socat tmux && \
     add-apt-repository -y ppa:deadsnakes/ppa
 RUN curl -sL https://deb.nodesource.com/setup_18.x  | bash -
 RUN apt-get -y install nodejs \
@@ -78,6 +78,15 @@ RUN mkdir -p /root/workspace && \
 COPY --from=0 /home/ide /root/ide
 
 # ! ADD CUSTOM IMPLEMENTATION 
+
+RUN curl -sL -L https://github.com/docker/compose/releases/download/v2.16.0/docker-compose-`uname -s`-`uname -m` -o /usr/local/bin/docker-compose \
+    && chmod +x /usr/local/bin/docker-compose \
+    # remove useless files from the current layer
+    && rm -rf /var/lib/apt/lists/* \
+    && rm -rf /var/lib/apt/lists.d/* \
+    && apt-get autoremove \
+    && apt-get clean \
+    && apt-get autoclean
 
 # Prepare environment
 ADD motd /root/workspace/motd

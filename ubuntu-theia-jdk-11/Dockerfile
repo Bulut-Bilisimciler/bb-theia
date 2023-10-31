@@ -88,7 +88,7 @@ ENV JAVA_HOME=/opt/java \
 
 # Install required packages
 RUN apt-get update && apt-get install -y \
-    wget tzdata \
+    wget tzdata git tmux \
     && apt-get clean
 
 ARG OPENJDK_VERSION=11.0.2
