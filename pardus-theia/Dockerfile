@@ -46,7 +46,7 @@ ENV HOME=/root \
 
 # Install Node.js, Yarn and required dependencies
 RUN apt-get update
-RUN apt-get -y install curl gnupg ca-certificates wget git tmux
+RUN apt-get -y install curl gnupg ca-certificates
 RUN mkdir -p /etc/apt/keyrings
 RUN curl -fsSL https://deb.nodesource.com/gpgkey/nodesource-repo.gpg.key | gpg --dearmor -o /etc/apt/keyrings/nodesource.gpg
 ENV NODE_MAJOR=18
