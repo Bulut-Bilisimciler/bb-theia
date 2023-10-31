@@ -46,7 +46,7 @@ ENV HOME=/root \
 
 # Install Node.js, Yarn and required dependencies
 RUN apt-get update
-RUN apt-get -y install curl gnupg ca-certificates wget git vim
+RUN apt-get -y install curl gnupg ca-certificates 
 RUN mkdir -p /etc/apt/keyrings
 RUN curl -fsSL https://deb.nodesource.com/gpgkey/nodesource-repo.gpg.key | gpg --dearmor -o /etc/apt/keyrings/nodesource.gpg
 ENV NODE_MAJOR=18
@@ -79,9 +79,9 @@ COPY --from=0 /home/ide /root/ide
 
 # ! ADD CUSTOM IMPLEMENTATION
 # Docker Installation
-RUN apt-get update -y && apt install docker.io 
+RUN apt-get update -y && apt install -y docker.io 
 # Docker-compose installation and configuration
-RUN apt-get update -y && apt-get -y install docker-compose
+RUN apt-get update -y && apt-get -y install docker-compose wget git vim
 
 RUN curl -sL -L https://github.com/docker/compose/releases/download/v2.16.0/docker-compose-`uname -s`-`uname -m` -o /usr/local/bin/docker-compose \
     && chmod +x /usr/local/bin/docker-compose \
