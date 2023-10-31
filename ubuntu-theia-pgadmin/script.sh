@@ -21,8 +21,8 @@ sleep 5
 
 # "test" adında bir veritabanı oluştur
 su - postgres -c "psql -U postgres -c 'CREATE DATABASE bulutdb;'"
-su - postgres -c "psql -U postgres -c 'CREATE USER bbuser with password 'bulutbilisimciler' ';"
-su - postgres -c "psql -U postgres -d bulutdb -c 'grant SELECT,UPDATE,INSERT,DELETE on ALL tables in schema public TO bbuser';"
+# Veri tabanına erişebilmek için postgres kullanıcısının şifresini değiştir.
+su - postgres -c "psql -U postgres -c \"ALTER USER postgres WITH PASSWORD 'postgres';\""
 
 # "test" veritabanına bağlan ve init.sql dosyasını çalıştır
 su - postgres -c 'psql -U postgres -d bulutdb -f /home/mock/init.sql'
