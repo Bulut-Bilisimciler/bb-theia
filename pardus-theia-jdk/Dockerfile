@@ -71,7 +71,7 @@ RUN mkdir -p /root/workspace && \
     # Setup an initial workspace
     echo '{"recentRoots":["file:///root/workspace"]}' > /root/.theia/recentworkspace.json && \
     # Setup settings (file icons theme)
-    echo '{"workbench.iconTheme": "vs-seti", "editor.mouseWheelZoom": true, "editor.fontSize": 18, "terminal.integrated.fontSize": 18 }' > /root/.theia/settings.json
+    echo '{"workbench.iconTheme":"vs-seti","editor.mouseWheelZoom":true,"editor.fontSize":18,"terminal.integrated.fontSize":18,"terminal.integrated.shell.linux":"\/usr\/bin\/tmux","terminal.integrated.profiles.linux":{"tmux":{"path":"\/usr\/bin\/tmux","icon":"terminal-tmux"},"bash":{"path":"\/bin\/bash","icon":"terminal-}' > /root/.theia/settings.json
 
 
 # Copy files from previous stage
@@ -81,7 +81,7 @@ COPY --from=0 /home/ide /root/ide
 # Docker Installation
 RUN apt-get update -y && apt install -y docker.io 
 # Docker-compose installation and configuration
-RUN apt-get update -y && apt-get -y install docker-compose wget git vim
+RUN apt-get update -y && apt-get -y install docker-compose curl wget git vim tmux
 
 RUN curl -sL -L https://github.com/docker/compose/releases/download/v2.16.0/docker-compose-`uname -s`-`uname -m` -o /usr/local/bin/docker-compose \
     && chmod +x /usr/local/bin/docker-compose \
@@ -148,7 +148,7 @@ RUN set -eux \
     && PAKETLER="bash \
         tzdata \
         wget" \
-     && apt -y install ${PAKETLER}
+    && apt -y install ${PAKETLER}
 
 RUN mkdir /ortakatman \
     && wget https://download.java.net/java/GA/jdk11/9/GPL/openjdk-${OPENJDK_VERSION}_linux-x64_bin.tar.gz \

@@ -71,7 +71,7 @@ RUN mkdir -p /root/workspace && \
     # Setup an initial workspace
     echo '{"recentRoots":["file:///root/workspace"]}' > /root/.theia/recentworkspace.json && \
     # Setup settings (file icons theme)
-    echo '{"workbench.iconTheme": "vs-seti", "editor.mouseWheelZoom": true, "editor.fontSize": 18, "terminal.integrated.fontSize": 18 }' > /root/.theia/settings.json
+    echo '{"workbench.iconTheme":"vs-seti","editor.mouseWheelZoom":true,"editor.fontSize":18,"terminal.integrated.fontSize":18,"terminal.integrated.shell.linux":"\/usr\/bin\/tmux","terminal.integrated.profiles.linux":{"tmux":{"path":"\/usr\/bin\/tmux","icon":"terminal-tmux"},"bash":{"path":"\/bin\/bash","icon":"terminal-}' > /root/.theia/settings.json
 
 
 # Copy files from previous stage 
