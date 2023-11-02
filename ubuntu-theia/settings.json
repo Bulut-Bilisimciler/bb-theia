@@ -4,7 +4,7 @@
   "editor.fontSize": 18,
   "editor.fontLigatures": false,
   "terminal.integrated.fontSize": 18,
-  "terminal.integrated.shell.linux": "/usr/bin/tmux",
+  "terminal.integrated.shell.linux": "bash",
   "terminal.integrated.profiles.linux": {
     "tmux": {
       "path": "/usr/bin/tmux",
