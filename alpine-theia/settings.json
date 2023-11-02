@@ -1,0 +1,18 @@
+{
+    "workbench.iconTheme": "vs-seti",
+    "editor.mouseWheelZoom": true,
+    "editor.fontSize": 18,
+    "terminal.integrated.fontSize": 18,
+    "terminal.integrated.shell.linux": "\/usr\/bin\/tmux",
+    "terminal.integrated.profiles.linux": {
+        "tmux": {
+            "path": "\/usr\/bin\/tmux",
+            "icon": "terminal-tmux"
+        },
+        "bash": {
+            "path": "\/bin\/bash",
+            "icon": "terminal-bash",
+            "editor.fontLigatures": false
+        }
+    }
+}
