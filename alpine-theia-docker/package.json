@@ -53,7 +53,7 @@
     "bundle": "yarn theia build",
     "rebuild": "yarn theia rebuild",
     "download:plugins": "yarn theia download:plugins",
-    "start": "yarn theia start --plugins=local-dir:plugins --ovsx-router-config=ovsx-router-config.json",
+    "start": "THEIA_WEBVIEW_EXTERNAL_ENDPOINT={{hostname}} theia start --plugins=local-dir:plugins --ovsx-router-config=../ovsx-router-config.json -p 3000 -h localhost",
     "watch": "yarn rebuild && theia build --watch --mode development"
   },
   "theiaPluginsDir": "plugins",
