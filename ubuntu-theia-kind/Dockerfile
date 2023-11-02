@@ -44,7 +44,7 @@ ENV HOME=/root \
 
 # Install Node.js, Yarn and required dependencies
 RUN apt-get update -y && apt-get -y install curl gnupg software-properties-common gcc \
-    git openssh-client bash libsecret-1-0 jq curl socat && \
+    git openssh-client bash libsecret-1-0 jq curl socat tmux && \
     add-apt-repository -y ppa:deadsnakes/ppa
 RUN curl -sL https://deb.nodesource.com/setup_18.x  | bash -
 RUN apt-get -y install nodejs \
@@ -69,9 +69,7 @@ RUN mkdir -p /root/workspace && \
     echo "alias poweroff='kill -1 1'" >> /etc/bash.bashrc && \
     echo "alias poweroff='kill -1 1'" >> /root/.bashrc && \
     # Setup an initial workspace
-    echo '{"recentRoots":["file:///root/workspace"]}' > /root/.theia/recentworkspace.json && \
-    # Setup settings (file icons theme)
-    echo '{"workbench.iconTheme": "vs-seti", "editor.mouseWheelZoom": true, "editor.fontSize": 18, "terminal.integrated.fontSize": 18 }' > /root/.theia/settings.json
+    echo '{"recentRoots":["file:///root/workspace"]}' > /root/.theia/recentworkspace.json
 
 
 # Copy files from previous stage 
@@ -102,6 +100,7 @@ COPY download-node-img.sh /usr/bin
 RUN chmod +x /usr/bin/download-node-img.sh && download-node-img.sh && rm /usr/bin/download-node-img.sh
 
 # Prepare environment
+ADD settings.json /root/.theia/settings.json
 ADD motd /root/workspace/motd
 WORKDIR /root/workspace
 USER root

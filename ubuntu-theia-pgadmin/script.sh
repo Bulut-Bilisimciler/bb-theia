@@ -28,8 +28,6 @@ su - postgres -c "psql -U postgres -c \"ALTER USER postgres WITH PASSWORD 'postg
 su - postgres -c 'psql -U postgres -d bulutdb -f /home/mock/init.sql'
 echo "PostgreSQL started success"
 
-node /root/ide/src-gen/backend/main.js --hostname=0.0.0.0 --port=3030 --plugins=local-dir:/root/ide/plugins
+docker-compose -f /root/workspace/docker-compose.yaml up -d
 
-# echo "Docker Compose Starting..."
-# docker-compose up -d
-# echo "Docker Compose Started Successfully!"
+THEIA_WEBVIEW_EXTERNAL_ENDPOINT="{{hostname}}" node /root/ide/src-gen/backend/main.js --hostname=localhost --port=3030 --plugins=local-dir:/root/ide/plugins --ovsx-router-config=ovsx-router-config.json

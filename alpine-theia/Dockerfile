@@ -32,7 +32,8 @@ ENV HOME=/root \
     USE_LOCAL_GIT=true
 
 # Update and install
-RUN apk add --no-cache curl gnupg gcc git openssh-client bash libsecret-dev jq socat vim
+RUN apk add --no-cache curl gnupg gcc git openssh-client bash libsecret-dev jq socat vim wget tmux
+
 
 RUN mkdir -p /root/workspace && \
     mkdir -p /root/ide && \
@@ -47,15 +48,14 @@ RUN mkdir -p /root/workspace && \
     echo "alias poweroff='kill -1 1'" >> /etc/bash.bashrc && \
     echo "alias poweroff='kill -1 1'" >> /root/.bashrc && \
     # Setup an initial workspace
-    echo '{"recentRoots":["file:///root/workspace"]}' > /root/.theia/recentworkspace.json && \
-    # Setup settings (file icons theme)
-    echo '{"workbench.iconTheme": "vs-seti", "editor.mouseWheelZoom": true, "editor.fontSize": 18, "terminal.integrated.fontSize": 18 }' > /root/.theia/settings.json
+    echo '{"recentRoots":["file:///root/workspace"]}' > /root/.theia/recentworkspace.json
 
 
 # Copy files from previous stage 
 COPY --from=0 /home/ide /root/ide
 
 # Prepare environment
+ADD settings.json /root/.theia/settings.json
 ADD motd /root/workspace/motd
 WORKDIR /root/workspace
 USER root
@@ -63,4 +63,8 @@ USER root
 # Example of a systemd service created to showcase a custom entry-point.
 EXPOSE 3030
 
-CMD [ "node","/root/ide/src-gen/backend/main.js", "--hostname=0.0.0.0", "--port=3030", "--plugins=local-dir:/root/ide/plugins"]
+# entrypoint
+COPY docker-entrypoint.sh /usr/bin/docker-entrypoint.sh
+RUN chmod +x /usr/bin/docker-entrypoint.sh
+
+ENTRYPOINT ["/usr/bin/docker-entrypoint.sh"]

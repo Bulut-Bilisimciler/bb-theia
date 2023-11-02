@@ -20,4 +20,4 @@ systemctl start postgresql
 sleep 5
 echo "PostgreSQL started success"
 
-node /root/ide/src-gen/backend/main.js --hostname=0.0.0.0 --port=3030 --plugins=local-dir:/root/ide/plugins
+THEIA_WEBVIEW_EXTERNAL_ENDPOINT="{{hostname}}" node /root/ide/src-gen/backend/main.js --hostname=localhost --port=3030 --plugins=local-dir:/root/ide/plugins --ovsx-router-config=ovsx-router-config.json

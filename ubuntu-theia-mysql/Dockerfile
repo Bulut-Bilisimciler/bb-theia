@@ -69,9 +69,7 @@ RUN mkdir -p /root/workspace && \
     echo "alias poweroff='kill -1 1'" >> /etc/bash.bashrc && \
     echo "alias poweroff='kill -1 1'" >> /root/.bashrc && \
     # Setup an initial workspace
-    echo '{"recentRoots":["file:///root/workspace"]}' > /root/.theia/recentworkspace.json && \
-    # Setup settings (file icons theme)
-    echo '{"workbench.iconTheme":"vs-seti","editor.mouseWheelZoom":true,"editor.fontSize":18,"terminal.integrated.fontSize":18,"terminal.integrated.shell.linux":"\/usr\/bin\/tmux","terminal.integrated.profiles.linux":{"tmux":{"path":"\/usr\/bin\/tmux","icon":"terminal-tmux"},"bash":{"path":"\/bin\/bash","icon":"terminal-}' > /root/.theia/settings.json
+    echo '{"recentRoots":["file:///root/workspace"]}' > /root/.theia/recentworkspace.json
 
 
 # Copy files from previous stage 
@@ -85,6 +83,7 @@ RUN export DEBIAN_FRONTEND=noninteractive \
     && apt-get install -y mysql-server
 
 # Prepare environment
+ADD settings.json /root/.theia/settings.json
 ADD motd /root/workspace/motd
 WORKDIR /root/workspace
 USER root
