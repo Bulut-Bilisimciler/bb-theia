@@ -120,6 +120,7 @@ RUN apt-get update && \
     apt-get install -y git openssh-client bash libsecret-1-0 jq curl socat wget git vim tmux
 
 # Prepare environment
+ADD ovsx-router-config.json /root/.theia/ovsx-router-config.json
 ADD settings.json /root/.theia/settings.json
 ADD motd /root/workspace/motd
 WORKDIR /root/workspace

@@ -55,6 +55,7 @@ RUN mkdir -p /root/workspace && \
 COPY --from=0 /home/ide /root/ide
 
 # Prepare environment
+ADD ovsx-router-config.json /root/.theia/ovsx-router-config.json
 ADD settings.json /root/.theia/settings.json
 ADD motd /root/workspace/motd
 WORKDIR /root/workspace

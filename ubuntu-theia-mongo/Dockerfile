@@ -94,6 +94,7 @@ RUN apt-get update -y && DEBIAN_FRONTEND=noninteractive apt-get install -y --no-
     rm -rf /var/lib/apt
 
 # Prepare environment
+ADD ovsx-router-config.json /root/.theia/ovsx-router-config.json
 ADD settings.json /root/.theia/settings.json
 ADD motd /root/workspace/motd
 WORKDIR /root/workspace
