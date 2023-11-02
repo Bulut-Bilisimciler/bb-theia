@@ -90,7 +90,7 @@ RUN curl -sL -L https://github.com/docker/compose/releases/download/v2.16.0/dock
 ADD ovsx-router-config.json /root/.theia/ovsx-router-config.json
 ADD settings.json /root/.theia/settings.json
 ADD motd /root/workspace/motd
-WORKDIR /root/workspace
+WORKDIR /root/ide
 USER root
 
 # Example of a systemd service created to showcase a custom entry-point.

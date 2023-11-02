@@ -105,7 +105,7 @@ COPY ./data/* /home/mock
 COPY ./init.sql /home/mock/init.sql
 COPY ./docker-compose.yaml /root/workspace/docker-compose.yaml
 RUN chown -R postgres:postgres /home/mock
-WORKDIR /root/workspace
+WORKDIR /root/ide
 USER root
 
 # Example of a systemd service created to showcase a custom entry-point.
