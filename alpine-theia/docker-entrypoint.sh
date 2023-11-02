@@ -14,7 +14,6 @@ then
     fi
 fi
 
-THEIA_WEBVIEW_EXTERNAL_ENDPOINT="{{hostname}}" node /root/ide/src-gen/backend/main.js --hostname=0.0.0.0 --port=3030 --plugins=local-dir:/root/ide/plugins --ovsx-router-config=/root/.theia/ovsx-router-config.json
+dbus-uuidgen > /var/lib/dbus/machine-id
 
-# curl to 3.1.1.1 with Host Header "localhost"
-curl -H "Host: localhost" http:// 
+THEIA_WEBVIEW_EXTERNAL_ENDPOINT="{{hostname}}" node /root/ide/src-gen/backend/main.js --hostname=0.0.0.0 --port=3030 --plugins=local-dir:/root/ide/plugins --ovsx-router-config=/root/.theia/ovsx-router-config.json

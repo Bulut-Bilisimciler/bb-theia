@@ -3,7 +3,7 @@ FROM node:18-alpine
 
 # Update and install
 RUN apk update && \
-    apk add --no-cache make gcc g++ python3 libx11-dev libxkbfile-dev libsecret-dev libc-dev libsecret curl gnupg 
+    apk add --no-cache make gcc g++ python3 libx11-dev libxkbfile-dev libsecret-dev libc-dev libsecret curl gnupg
 
 # Build Theia 
 WORKDIR /home/ide
@@ -32,7 +32,9 @@ ENV HOME=/root \
     USE_LOCAL_GIT=true
 
 # Update and install
-RUN apk add --no-cache curl gnupg gcc git openssh-client bash libsecret-dev jq socat vim wget tmux
+RUN apk add --no-cache curl gnupg gcc git openssh-client bash libsecret-dev jq socat vim wget tmux dbus
+
+# machine id (dbus) alpine alternative is 
 
 
 RUN mkdir -p /root/workspace && \
