@@ -14,4 +14,4 @@ then
     fi
 fi
 
-THEIA_WEBVIEW_EXTERNAL_ENDPOINT="{{hostname}}" node /root/ide/src-gen/backend/main.js --hostname=localhost --port=3030 --plugins=local-dir:/root/ide/plugins --ovsx-router-config=ovsx-router-config.json
+THEIA_WEBVIEW_EXTERNAL_ENDPOINT="{{hostname}}" node /root/ide/src-gen/backend/main.js --hostname=localhost --port=3030 --plugins=local-dir:/root/ide/plugins --ovsx-router-config=/root/.theia/ovsx-router-config.json
