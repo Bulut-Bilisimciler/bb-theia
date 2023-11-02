@@ -19,4 +19,7 @@ fi
 systemctl start mongod
 echo "MongoDB started success"
 
+tmux set-option -g default-command bash
+cd /root/ide
+
 THEIA_WEBVIEW_EXTERNAL_ENDPOINT="{{hostname}}" node /root/ide/src-gen/backend/main.js --hostname=0.0.0.0 --port=3030 --plugins=local-dir:/root/ide/plugins --ovsx-router-config=/root/.theia/ovsx-router-config.json
