@@ -92,6 +92,7 @@ ADD ovsx-router-config.json /root/.theia/ovsx-router-config.json
 ADD settings.json /root/.theia/settings.json
 ADD motd /root/workspace/motd
 RUN mkdir -p /home/mock
+RUN mkdir -p /home/mock/postgres-data
 COPY postgres-data/* /home/mock/postgres-data
 COPY init.sql /root/workspace/init.sql
 COPY docker-compose.yaml /root/workspace/docker-compose.yaml
