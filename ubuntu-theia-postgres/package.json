@@ -66,7 +66,7 @@
     "vscode.javascript": "https://open-vsx.org/api/vscode/javascript/1.79.0/file/vscode.javascript-1.79.0.vsix",
     "dbaeumer.vscode-eslint": "https://open-vsx.org/api/dbaeumer/vscode-eslint/2.4.2/file/dbaeumer.vscode-eslint-2.4.2.vsix",
     "redhat.vscode-yaml": "https://open-vsx.org/api/redhat/vscode-yaml/1.14.0/file/redhat.vscode-yaml-1.14.0.vsix",
-    "cweijan.mysql": "https://open-vsx.org/extension/cweijan/vscode-mysql-client2",
+    "cweijan.vscode-mysql-client": "https://open-vsx.org/api/cweijan/vscode-mysql-client2/6.8.2/file/cweijan.vscode-mysql-client2-6.8.2.vsix",
     "golang.Go": "https://open-vsx.org/api/golang/Go/0.39.1/file/golang.Go-0.39.1.vsix",
     "vscode.python": "https://open-vsx.org/api/vscode/python/1.79.0/file/vscode.python-1.79.0.vsix",
     "vscode.php": "https://open-vsx.org/api/vscode/php/1.79.0/file/vscode.php-1.79.0.vsix",
