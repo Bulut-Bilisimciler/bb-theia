@@ -86,14 +86,15 @@ RUN curl -sL -L https://github.com/docker/compose/releases/download/v2.16.0/dock
     && apt-get clean \
     && apt-get autoclean
 
+
 # Prepare environment
 ADD ovsx-router-config.json /root/.theia/ovsx-router-config.json
 ADD settings.json /root/.theia/settings.json
 ADD motd /root/workspace/motd
 RUN mkdir -p /home/mock
-ADD postgres-data/* /home/mock/postgres-data
-ADD init.sql /root/workspace/init.sql
-ADD docker-compose.yaml /root/workspace/docker-compose.yaml
+COPY postgres-data/* /home/mock/postgres-data
+COPY init.sql /root/workspace/init.sql
+COPY docker-compose.yaml /root/workspace/docker-compose.yaml
 WORKDIR /root/ide
 USER root
 
