@@ -1,3 +1,6 @@
+CREATE USER bbuser WITH PASSWORD 'bbuserpassword';
+CREATE DATABASE bulutdb;
+GRANT ALL PRIVILEGES ON DATABASE bulutdb TO bbuser;
 
 CREATE TABLE customers (
 CustomerID SERIAL PRIMARY KEY, 

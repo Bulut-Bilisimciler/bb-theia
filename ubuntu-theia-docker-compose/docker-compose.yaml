@@ -19,5 +19,5 @@ services:
       POSTGRES_USER: postgres     # Kullanıcı adını burada ayarlayabilirsiniz
       POSTGRES_PASSWORD: postgres  # Parolayı burada ayarlayabilirsiniz
     volumes:
-      - /home/mock/init.sql:/docker-entrypoint-initdb.d/init.sql
+      - /root/workspace/init.sql:/docker-entrypoint-initdb.d/init.sql
       - /home/mock/postgres-data:/var/lib/postgresql/data
