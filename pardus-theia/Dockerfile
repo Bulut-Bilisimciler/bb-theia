@@ -85,6 +85,20 @@ RUN apt-get update &&                            \
             libsystemd0                          \
             ca-certificates                      \
             dbus                                 \
+            man-db                                 \
+            manpages-tr                                 \
+            file                             \
+            pciutils                            \
+            neofetch                                \
+            usbutils                             \
+            nano                                    \
+            sl                                     \
+            tree                                   \
+            locate                              \
+            lsb-release                         \
+            htop                                   \
+            iputils-ping                        \
+            bc                                      \
             iptables                             \
             iproute2                             \
             kmod                                 \

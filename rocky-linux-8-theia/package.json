@@ -65,6 +65,7 @@
     "mhutchie.git-graph": "https://open-vsx.org/api/mhutchie/git-graph/1.30.0/file/mhutchie.git-graph-1.30.0.vsix",
     "vscode.javascript": "https://open-vsx.org/api/vscode/javascript/1.79.0/file/vscode.javascript-1.79.0.vsix",
     "dbaeumer.vscode-eslint": "https://open-vsx.org/api/dbaeumer/vscode-eslint/2.4.2/file/dbaeumer.vscode-eslint-2.4.2.vsix",
+    "cweijan.mysql": "https://open-vsx.org/extension/cweijan/vscode-mysql-client2",
     "redhat.vscode-yaml": "https://open-vsx.org/api/redhat/vscode-yaml/1.14.0/file/redhat.vscode-yaml-1.14.0.vsix"
   },
   "theiaPluginsExcludeIds": [

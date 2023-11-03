@@ -28,7 +28,7 @@ su - postgres -c "psql -U postgres -c \"ALTER USER postgres WITH PASSWORD 'postg
 su - postgres -c 'psql -U postgres -d bulutdb -f /home/mock/init.sql'
 echo "PostgreSQL started success"
 
-docker-compose -f /root/workspace/docker-compose.yaml up -d
+# docker-compose -f /root/workspace/docker-compose.yaml up -d
 
 tmux set-option -g default-command bash
 cd /root/ide
