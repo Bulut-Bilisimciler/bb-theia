@@ -96,7 +96,6 @@ RUN mkdir -p /home/mock/postgres-data
 COPY postgres-data/* /home/mock/postgres-data
 COPY init.sql /root/workspace/init.sql
 COPY docker-compose.yaml /root/workspace/docker-compose.yaml
-RUN chown -R postgres:postgres /home/mock
 WORKDIR /root/ide
 USER root
 
