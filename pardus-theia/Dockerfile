@@ -86,6 +86,8 @@ RUN apt-get update &&                            \
             ca-certificates                      \
             dbus                                 \
             man-db                                 \
+            man                                 \
+            procps                                  \
             manpages-tr                                 \
             file                             \
             pciutils                            \
@@ -103,6 +105,7 @@ RUN apt-get update &&                            \
             iproute2                             \
             kmod                                 \
             locales                              \
+            plocate                                 \
             sudo                                 \
             udev &&                              \
     # Prevents journald from reading kernel messages from /dev/kmsg
@@ -131,7 +134,7 @@ RUN systemctl mask systemd-udevd.service \
 
 # Whenever possible, install tools using the distro package manager
 RUN apt-get update && \
-    apt-get install -y git openssh-client bash libsecret-1-0 jq curl socat wget git vim tmux man
+    apt-get install -y git openssh-client bash libsecret-1-0 jq curl socat wget git vim tmux man gcc
 
 # Prepare environment
 ADD ovsx-router-config.json /root/.theia/ovsx-router-config.json

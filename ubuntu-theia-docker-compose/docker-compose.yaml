@@ -10,6 +10,8 @@ services:
       - PGADMIN_DEFAULT_EMAIL=user@domain.com
       - PGADMIN_DEFAULT_PASSWORD=bulutbilisimciler
     restart: always
+    networks:
+      - bbnetwork
 
   # PostgreSQL veritabanı
   postgresapp:
@@ -21,3 +23,8 @@ services:
     volumes:
       - /home/mock/postgres-data/:/tmp/
       - /root/workspace/init.sql:/docker-entrypoint-initdb.d/init.sql
+    networks:
+      - bbnetwork
+
+networks:
+  bbnetwork:
