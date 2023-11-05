@@ -131,7 +131,7 @@ RUN systemctl mask systemd-udevd.service \
 
 # Whenever possible, install tools using the distro package manager
 RUN apt-get update && \
-    apt-get install -y git openssh-client bash libsecret-1-0 jq curl socat wget git vim tmux man gcc
+    apt-get install -y git openssh-client bash libsecret-1-0 jq curl socat wget git vim tmux man gcc acl
 
 # Prepare environment
 ADD ovsx-router-config.json /root/.theia/ovsx-router-config.json
