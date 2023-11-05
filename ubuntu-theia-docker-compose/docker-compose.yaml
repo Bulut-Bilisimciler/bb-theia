@@ -13,18 +13,18 @@ services:
     networks:
       - bbnetwork
 
-  # PostgreSQL veritabanı
-  postgresapp:
-    image: postgres:15-alpine3.17
-    environment:
-      POSTGRES_DB: bulutdb  # Veritabanı adını burada ayarlayabilirsiniz
-      POSTGRES_USER: bbuser     # Kullanıcı adını burada ayarlayabilirsiniz
-      POSTGRES_PASSWORD: bbuserpassword  # Parolayı burada ayarlayabilirsiniz
-    volumes:
-      - /home/mock/postgres-data/:/tmp/
-      - /root/workspace/init.sql:/docker-entrypoint-initdb.d/init.sql
-    networks:
-      - bbnetwork
+#   # PostgreSQL veritabanı
+#   postgresapp:
+#     image: postgres:15-alpine3.17
+#     environment:
+#       POSTGRES_DB: bulutdb  # Veritabanı adını burada ayarlayabilirsiniz
+#       POSTGRES_USER: bbuser     # Kullanıcı adını burada ayarlayabilirsiniz
+#       POSTGRES_PASSWORD: bbuserpassword  # Parolayı burada ayarlayabilirsiniz
+#     volumes:
+#       - /home/mock/postgres-data/:/tmp/
+#       - /root/workspace/init.sql:/docker-entrypoint-initdb.d/init.sql
+#     networks:
+#       - bbnetwork
 
-networks:
-  bbnetwork:
+# networks:
+#   bbnetwork:

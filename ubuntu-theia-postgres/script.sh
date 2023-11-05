@@ -19,6 +19,9 @@ fi
 systemctl start postgresql
 echo "PostgreSQL started success"
 
+# Veri tabanına erişebilmek için postgres kullanıcısının şifresini değiştir.
+su - postgres -c "psql -U postgres -c \"ALTER USER postgres WITH PASSWORD 'postgres';\""
+
 tmux set-option -g default-command bash
 cd /root/ide
 
