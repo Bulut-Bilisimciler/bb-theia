@@ -27,11 +27,15 @@ su - postgres -c "psql -U postgres -c 'CREATE DATABASE bulutdb OWNER bbuser;'"
 # "bulutdb" adında bir veritabanı oluştur
 #su - postgres -c "psql -U postgres -c 'CREATE DATABASE bulutdb;'"
 
+su - postgres -c "psql -U postgres -d bulutdb -c 'GRANT ALL PRIVILEGES ON DATABASE bulutdb TO bbuser;'"
+su - postgres -c "psql -U postgres -d bulutdb -c 'GRANT ALL PRIVILEGES ON ALL TABLES IN SCHEMA public TO bbuser;'"
+su - postgres -c "psql -U postgres -d bulutdb -c 'GRANT ALL PRIVILEGES ON ALL SEQUENCES IN SCHEMA public TO bbuser;'"
+
 # Veri tabanına erişebilmek için postgres kullanıcısının şifresini değiştir.
 su - postgres -c "psql -U postgres -c \"ALTER USER postgres WITH PASSWORD 'postgres';\""
 
 # "bulutdb" veritabanına bağlan ve init.sql dosyasını çalıştır
-su - postgres -c 'psql -U bbuser -d bulutdb -f /home/mock/init.sql'
+su - postgres -c 'psql -U postgres -d bulutdb -f /home/mock/init.sql'
 echo "PostgreSQL started success"
 
 # docker-compose -f /root/workspace/docker-compose.yaml up -d
