@@ -67,6 +67,7 @@
     "dbaeumer.vscode-eslint": "https://open-vsx.org/api/dbaeumer/vscode-eslint/2.4.2/file/dbaeumer.vscode-eslint-2.4.2.vsix",
     "redhat.vscode-yaml": "https://open-vsx.org/api/redhat/vscode-yaml/1.14.0/file/redhat.vscode-yaml-1.14.0.vsix",
     "cweijan.vscode-mysql-client": "https://open-vsx.org/api/cweijan/vscode-mysql-client2/6.8.2/file/cweijan.vscode-mysql-client2-6.8.2.vsix",
+    "mtxr.sqltools": "https://open-vsx.org/api/mtxr/sqltools/0.28.0/file/mtxr.sqltools-0.28.0.vsix",
     "ms-azuretools.vscode-docker": "https://open-vsx.org/api/ms-azuretools/vscode-docker/1.27.0/file/ms-azuretools.vscode-docker-1.27.0.vsix",
     "golang.Go": "https://open-vsx.org/api/golang/Go/0.39.1/file/golang.Go-0.39.1.vsix",
     "vscode.python": "https://open-vsx.org/api/vscode/python/1.79.0/file/vscode.python-1.79.0.vsix",
@@ -81,6 +82,7 @@
     "vscode.github",
     "vscode.github-authentication",
     "vscode.microsoft-authentication",
+    "mtxr.sqltools",
     "ms-vscode.references-view"
   ]
 }
