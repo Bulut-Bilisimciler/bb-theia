@@ -17,15 +17,21 @@ fi
 
 # PostgreSQL hizmetini başlat
 systemctl start postgresql
-sleep 5
 
-# "test" adında bir veritabanı oluştur
-su - postgres -c "psql -U postgres -c 'CREATE DATABASE bulutdb;'"
+# "bbuser" adında bir kullanıcı oluştur ve şifresini ayarla
+su - postgres -c "psql -U postgres -c \"CREATE USER bbuser WITH PASSWORD 'bbuserpassword';\""
+
+# "bulutdb" adında bir veritabanı oluştur ve sahibini "bbuser" olarak ayarla
+su - postgres -c "psql -U postgres -c 'CREATE DATABASE bulutdb OWNER bbuser;'"
+
+# "bulutdb" adında bir veritabanı oluştur
+#su - postgres -c "psql -U postgres -c 'CREATE DATABASE bulutdb;'"
+
 # Veri tabanına erişebilmek için postgres kullanıcısının şifresini değiştir.
 su - postgres -c "psql -U postgres -c \"ALTER USER postgres WITH PASSWORD 'postgres';\""
 
-# "test" veritabanına bağlan ve init.sql dosyasını çalıştır
-su - postgres -c 'psql -U postgres -d bulutdb -f /home/mock/init.sql'
+# "bulutdb" veritabanına bağlan ve init.sql dosyasını çalıştır
+su - postgres -c 'psql -U bbuser -d bulutdb -f /home/mock/init.sql'
 echo "PostgreSQL started success"
 
 # docker-compose -f /root/workspace/docker-compose.yaml up -d
