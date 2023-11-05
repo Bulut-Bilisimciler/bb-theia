@@ -3,7 +3,7 @@ version: '3'
 services:
   # pgadmin
   pgadminapp:
-    image: dpage/pgadmin4:latest
+    image: dpage/pgadmin4:7
     ports:
       - "8080:80"
     environment:
@@ -15,7 +15,7 @@ services:
 
   # PostgreSQL veritabanı
   postgresapp:
-    image: postgres:latest
+    image: postgres:15-alpine3.17
     environment:
       POSTGRES_DB: bulutdb  # Veritabanı adını burada ayarlayabilirsiniz
       POSTGRES_USER: bbuser     # Kullanıcı adını burada ayarlayabilirsiniz

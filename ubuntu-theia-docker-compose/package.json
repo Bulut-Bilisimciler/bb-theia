@@ -72,6 +72,7 @@
     "vscode.python": "https://open-vsx.org/api/vscode/python/1.79.0/file/vscode.python-1.79.0.vsix",
     "vscode.php": "https://open-vsx.org/api/vscode/php/1.79.0/file/vscode.php-1.79.0.vsix",
     "cweijan.vscode-mysql-client": "https://open-vsx.org/api/cweijan/vscode-mysql-client2/6.8.2/file/cweijan.vscode-mysql-client2-6.8.2.vsix",    
+    "mtxr.sqltools": "https://open-vsx.org/api/mtxr/sqltools/0.28.0/file/mtxr.sqltools-0.28.0.vsix",
     "vscode.cpp": "https://open-vsx.org/api/vscode/cpp/1.79.0/file/vscode.cpp-1.79.0.vsix"
   },
   "theiaPluginsExcludeIds": [
@@ -82,6 +83,7 @@
     "vscode.github",
     "vscode.github-authentication",
     "vscode.microsoft-authentication",
+    "mtxr.sqltools",
     "ms-vscode.references-view"
   ]
 }

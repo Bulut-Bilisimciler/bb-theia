@@ -118,8 +118,6 @@ RUN apt-get update &&                            \
     /var/log/*                                                     \
     /tmp/*                                                         \
     /var/tmp/*                                                     \
-    /usr/share/doc/*                                               \
-    /usr/share/man/*                                               \
     /usr/share/local/* &&                                          \
     # Create default 'admin/admin' user
     useradd --create-home --shell /bin/bash admin && echo "admin:admin" | chpasswd && adduser admin sudo
