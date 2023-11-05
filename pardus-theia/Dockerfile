@@ -115,7 +115,6 @@ RUN apt-get update &&                            \
     rm -rf                                                            \
     /var/cache/debconf/*                                           \
     /var/lib/apt/lists/*                                           \
-    /var/log/*                                                     \
     /tmp/*                                                         \
     /var/tmp/*                                                     \
     /usr/share/local/* &&                                          \
