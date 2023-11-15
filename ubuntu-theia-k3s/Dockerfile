@@ -44,7 +44,7 @@ ENV HOME=/root \
 
 # Install Node.js, Yarn and required dependencies
 RUN apt-get update -y && apt-get -y install curl gnupg software-properties-common gcc git vim \
-    git openssh-client bash libsecret-1-0 jq curl socat tmux && \
+    git openssh-client bash libsecret-1-0 jq wget socat tmux && \
     add-apt-repository -y ppa:deadsnakes/ppa
 RUN curl -sL https://deb.nodesource.com/setup_18.x  | bash -
 RUN apt-get -y install nodejs \
@@ -76,8 +76,8 @@ RUN mkdir -p /root/workspace && \
 COPY --from=0 /home/ide /root/ide
 
 # ! ADD CUSTOM IMPLEMENTATION 
-
-RUN curl -sfL https://get.k3s.io | sh - 
+#installation k3s
+RUN curl -sfL https://get.k3s.io | bash -
 
 # Prepare environment
 ADD ovsx-router-config.json /root/.theia/ovsx-router-config.json
