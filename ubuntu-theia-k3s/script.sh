@@ -18,4 +18,9 @@ fi
 tmux set-option -g default-command bash
 cd /root/ide
 
+curl -sfL https://get.k3s.io | sh - 
+# Check for Ready node, takes ~30 seconds
+sleep 1
+k3s kubectl get node 
+
 THEIA_WEBVIEW_EXTERNAL_ENDPOINT="{{hostname}}" node /root/ide/src-gen/backend/main.js --hostname=0.0.0.0 --port=3030 --plugins=local-dir:/root/ide/plugins --ovsx-router-config=/root/.theia/ovsx-router-config.json

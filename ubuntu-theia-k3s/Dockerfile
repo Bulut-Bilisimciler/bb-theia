@@ -76,8 +76,7 @@ RUN mkdir -p /root/workspace && \
 COPY --from=0 /home/ide /root/ide
 
 # ! ADD CUSTOM IMPLEMENTATION 
-#installation k3s
-RUN curl -sfL https://get.k3s.io | bash -
+
 
 # Prepare environment
 ADD ovsx-router-config.json /root/.theia/ovsx-router-config.json
