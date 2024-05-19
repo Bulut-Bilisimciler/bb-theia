@@ -32,9 +32,10 @@ ENV HOME=/root \
     USE_LOCAL_GIT=true
 
 # Update and install
-RUN apk add --no-cache curl gnupg gcc git openssh-client bash libsecret-dev jq socat vim wget tmux dbus
+RUN apk add --no-cache curl gnupg gcc git openssh-client bash libsecret-dev jq socat vim wget asciinema dbus
 
-# machine id (dbus) alpine alternative is 
+# rename asciinema to bblogger
+RUN mv /usr/bin/asciinema /usr/bin/bblogger
 
 
 RUN mkdir -p /root/workspace && \
@@ -70,4 +71,4 @@ EXPOSE 3030
 COPY docker-entrypoint.sh /usr/bin/docker-entrypoint.sh
 RUN chmod +x /usr/bin/docker-entrypoint.sh
 
-ENTRYPOINT ["/usr/bin/docker-entrypoint.sh"]
+CMD ["THEIA_WEBVIEW_EXTERNAL_ENDPOINT=\"{{hostname}}\" node /root/ide/src-gen/backend/main.js --hostname=0.0.0.0 --port=3030 --plugins=local-dir:/root/ide/plugins"]

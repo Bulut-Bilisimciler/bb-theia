@@ -4,14 +4,10 @@
   "editor.fontSize": 18,
   "editor.fontLigatures": false,
   "terminal.integrated.fontSize": 18,
-  "terminal.integrated.shell.linux": "bash",
+  "terminal.integrated.shell.linux": "terminal",
   "terminal.integrated.profiles.linux": {
-    "tmux": {
-      "path": "/usr/bin/tmux",
-      "icon": "terminal-tmux"
-    },
-    "bash": {
-      "path": "/bin/bash",
+    "terminal": {
+      "path": "/usr/bin/bblogger",
       "icon": "terminal-bash"
     }
   },
