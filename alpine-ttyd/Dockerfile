@@ -57,14 +57,14 @@ RUN set -eux \
     # -- custom \
     jq \
     socat \
-    # -- logging
+    # -- logging \
     openssh-client \
     asciinema \
     ttyd \
     neovim \
     s3cmd \
     tmux \
-    screen \
+    websocat \
     " \
     && apk add --no-cache ${PACKAGES}
 
