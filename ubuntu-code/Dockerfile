@@ -72,11 +72,11 @@ RUN set -eux \
     ripgrep \
     npm \
     # -- system \
-    dbus \
-    gnupg \
+    # dbus \
+    # gnupg \
     make \
-    libx11-dev \
-    libxkbfile-dev \
+    # libx11-dev \
+    # libxkbfile-dev \
     libc-dev \
     libssl-dev \
     # -- custom \
